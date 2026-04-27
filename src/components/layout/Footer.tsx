@@ -21,8 +21,8 @@ const footerLinks = {
   Contact: [
     { label: "Admissions", href: "#contact" },
     { label: "Free Counseling", href: "#contact" },
-    { label: "WhatsApp", href: "https://wa.me/923000000000" },
-    { label: "Call Us", href: "tel:+923000000000" },
+    { label: "WhatsApp", href: "https://wa.me/923011182020" },
+    { label: "Call Us", href: "tel:+923011182020" }, 
     { label: "Email Us", href: "mailto:info@ibexinstitute.com" },
   ],
 };
@@ -93,14 +93,16 @@ export default function Footer() {
               </div>
             </motion.div>
             <p className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs">
-              Bahawalpur&apos;s premier preparatory institute — shaping futures through
-              expert Entry Test preparation and Evening Coaching since 2014.
+              {/* Bahawalpur&apos;s premier preparatory institute — shaping futures through
+              expert Entry Test preparation and Evening Coaching since 2014. */}
+
+               Your Gateway to Success in Medical and Engineering Fields!
             </p>
             <div className="space-y-2.5 mb-6">
               {[
-                { icon: MapPin, text: "Bahawalpur, Punjab, Pakistan" },
-                { icon: Phone, text: "+92 300-0000000" },
-                { icon: Mail, text: "info@ibexinstitute.com" },
+                { icon: MapPin, text: "11-D Gulberg Road Near Chase Value Center Model Town A, Bahawalpur, Bahawalpur, Pakistan" },
+                { icon: Phone, text: "+92 3011182020" },
+                { icon: Mail, text: "ibexcampus@gmail.com" },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-2.5 text-sm text-white/60">
                   <item.icon className="w-4 h-4 text-accent-500 shrink-0" />
