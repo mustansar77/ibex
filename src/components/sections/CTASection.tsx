@@ -41,14 +41,14 @@ export default function CTASection() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a
-                href="tel:+92300000000"
+                href="tel:+923011182020"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent-500 hover:bg-accent-600 text-white font-bold transition-all shadow-lg shadow-accent-500/30"
               >
                 <Phone className="w-4 h-4" />
                 Call Now
               </a>
               <a
-                href="https://wa.me/923000000000"
+                href="https://wa.me/923011182020"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 text-white font-semibold transition-all"
@@ -66,16 +66,16 @@ export default function CTASection() {
             {
               icon: Phone,
               title: "Call Us",
-              lines: ["+92 300-0000000", "+92 62-0000000"],
+              lines: ["+92 301-1182020", ],
               color: "text-blue-600 dark:text-blue-400",
               bg: "bg-blue-50 dark:bg-blue-950/40",
-              action: "tel:+923000000000",
+              action: "tel:+923011182020",
               actionLabel: "Call Now →",
             },
             {
               icon: Mail,
               title: "Email Us",
-              lines: ["info@ibexinstitute.com", "admissions@ibexinstitute.com"],
+              lines: ["ibexcampus@gmail.com", ],
               color: "text-amber-600 dark:text-amber-400",
               bg: "bg-amber-50 dark:bg-amber-950/40",
               action: "mailto:info@ibexinstitute.com",
