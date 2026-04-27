@@ -1,7 +1,23 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --no-git)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(taskkill /PID 16900 /F)",
+      "PowerShell(Stop-Process -Id 16900 -Force 2>&1)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(Start-Sleep -Seconds 2)",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(del \"E:\\\\Company Project\\\\Apps By Claude\\\\ibex\\\\src\\\\app\\\\page.tsx\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" http://localhost:3000/)",
+      "Bash(mkdir -p \"E:\\\\Company Project\\\\Apps By Claude\\\\ibex\\\\src\\\\app\\\\\\(site\\)\\\\session\\\\[slug]\")",
+      "Bash(mkdir -p \"E:\\\\Company Project\\\\Apps By Claude\\\\ibex\\\\src\\\\app\\\\\\(site\\)\\\\programs\\\\[slug]\")",
+      "Bash(npx tsc *)",
+      "PowerShell(Stop-Process -Name node -Force -ErrorAction SilentlyContinue)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
