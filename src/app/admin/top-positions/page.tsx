@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Trophy, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface Position {
   id: string;
@@ -17,14 +16,13 @@ interface Position {
   image_url: string;
 }
 
-const mockData: Position[] = [
-  { id: "1", name: "Ahmad Hassan",  marks_obtained: 185,  total_marks: 200,  board: "UHS",              test_type: "MDCAT",  year: "2024", rank: 1, image_url: "https://randomuser.me/api/portraits/men/1.jpg" },
-  { id: "2", name: "Fatima Zainab", marks_obtained: 183,  total_marks: 200,  board: "UHS",              test_type: "MDCAT",  year: "2024", rank: 2, image_url: "https://randomuser.me/api/portraits/women/1.jpg" },
-  { id: "3", name: "Zain Ahmed",    marks_obtained: 1090, total_marks: 1100, board: "Bahawalpur Board", test_type: "Matric", year: "2024", rank: 1, image_url: "https://randomuser.me/api/portraits/men/5.jpg" },
-];
-
 const empty: Omit<Position, "id"> = { name: "", marks_obtained: 0, total_marks: 200, board: "", test_type: "MDCAT", year: new Date().getFullYear().toString(), rank: 1, image_url: "" };
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";
+
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 export default function TopPositionsAdmin() {
   const [positions, setPositions] = useState<Position[]>([]);
@@ -37,12 +35,8 @@ export default function TopPositionsAdmin() {
 
   const fetchData = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("top_positions").select("*").order("year", { ascending: false }).order("rank");
-      setPositions(data || []);
-    } else {
-      setPositions(mockData);
-    }
+    const { data } = await dbCall({ table: "top_positions", op: "select", orderBy: { col: "year", asc: false } });
+    setPositions(data || []);
     setLoading(false);
   };
 
@@ -56,19 +50,14 @@ export default function TopPositionsAdmin() {
 
   const save = async () => {
     setSaving(true);
-    if (isSupabaseConfigured) {
-      if (editing) await supabase.from("top_positions").update(form).eq("id", editing.id);
-      else await supabase.from("top_positions").insert([form]);
-      await fetchData();
-    } else {
-      if (editing) setPositions((prev) => prev.map((p) => (p.id === editing.id ? { ...p, ...form } : p)));
-      else setPositions((prev) => [...prev, { ...form, id: Date.now().toString() }]);
-    }
+    if (editing) await dbCall({ table: "top_positions", op: "update", id: editing.id, data: form });
+    else await dbCall({ table: "top_positions", op: "insert", data: form });
+    await fetchData();
     setSaving(false); setShowForm(false);
   };
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("top_positions").delete().eq("id", id);
+    await dbCall({ table: "top_positions", op: "delete", id });
     setPositions((prev) => prev.filter((p) => p.id !== id));
     setDeleteId(null);
   };

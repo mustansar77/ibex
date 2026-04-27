@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, Eye, RefreshCw, Filter } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 import type { Application } from "@/lib/types";
 import StudentModal from "@/components/admin/StudentModal";
 
@@ -13,10 +12,10 @@ const statusColors: Record<string, string> = {
   rejected: "bg-red-900/40 text-red-400",
 };
 
-const mockData: Application[] = [
-  { id: "abc123", created_at: new Date().toISOString(), name: "Ahmad Hassan", father_name: "Akbar Hassan", cnic: "31201-1234567-1", email: "ahmad@example.com", phone: "+92 300-1234567", address: "Main Road, Bahawalpur", program: "entry-test", test_type: "MDCAT", matric_marks: 980, matric_total: 1100, inter_marks: 920, inter_total: 1100, school_name: "Govt. High School BWP", college_name: "Govt. College BWP", batch_preference: "Morning (7AM-11AM)", emergency_contact: "+92 301-1234567", status: "applied", notes: null },
-  { id: "def456", created_at: new Date(Date.now() - 86400000).toISOString(), name: "Fatima Zainab", father_name: "Zainab Malik", cnic: "31201-7654321-2", email: "fatima@example.com", phone: "+92 311-7654321", address: "Model Town, Bahawalpur", program: "evening-coaching", test_type: null, matric_marks: 950, matric_total: 1100, inter_marks: null, inter_total: 1100, school_name: "Govt. Girls School", college_name: null, batch_preference: "Evening Batch A (4-6PM)", emergency_contact: null, status: "enrolled", notes: null },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 export default function ApplicationsPage() {
   const [apps, setApps] = useState<Application[]>([]);
@@ -27,21 +26,15 @@ export default function ApplicationsPage() {
 
   const fetchApps = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("applications").select("*").order("created_at", { ascending: false });
-      setApps(data || []);
-    } else {
-      setApps(mockData);
-    }
+    const { data } = await dbCall({ table: "applications", op: "select", orderBy: { col: "created_at", asc: false } });
+    setApps(data || []);
     setLoading(false);
   };
 
   useEffect(() => { fetchApps(); }, []);
 
   const updateStatus = async (id: string, status: string) => {
-    if (isSupabaseConfigured) {
-      await supabase.from("applications").update({ status }).eq("id", id);
-    }
+    await dbCall({ table: "applications", op: "update", id, data: { status } });
     setApps((prev) => prev.map((a) => (a.id === id ? { ...a, status: status as Application["status"] } : a)));
   };
 

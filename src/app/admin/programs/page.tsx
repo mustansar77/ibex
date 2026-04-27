@@ -3,16 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, FlaskConical, Clock, Users, BookOpen, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface ProgramItem { id: string; slug: string; title: string; tagline: string; description: string; duration: string; timing: string; batch_size: string; features: string[]; is_active: boolean; }
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";
 const emptyProgram: Omit<ProgramItem, "id"> = { slug: "", title: "", tagline: "", description: "", duration: "", timing: "", batch_size: "", features: [], is_active: true };
 
-const mockPrograms: ProgramItem[] = [
-  { id: "1", slug: "entry-test", title: "Entry Test Preparation", tagline: "MDCAT · ECAT · NTS", description: "Comprehensive preparation for all major entry tests.", duration: "6–12 Months", timing: "Morning 7AM–11AM", batch_size: "Max 40 Students", features: ["MDCAT / ECAT / NTS Coverage","Daily Practice Tests","Weekly Mock Exams"], is_active: true },
-  { id: "2", slug: "evening-coaching", title: "Evening Coaching", tagline: "Matric & Inter", description: "After-school coaching for Matric and Intermediate.", duration: "Full Academic Year", timing: "Evening 4PM–8PM", batch_size: "Max 30 Students", features: ["Board Exam Preparation","Subject-wise Coaching","Regular Tests"], is_active: true },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
 
 export default function ProgramsAdmin() {
   const [programs, setPrograms] = useState<ProgramItem[]>([]);
@@ -23,15 +26,14 @@ export default function ProgramsAdmin() {
   const [form, setForm]         = useState<Omit<ProgramItem, "id">>(emptyProgram);
   const [featInput, setFeatInput] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [error, setError]       = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("programs").select("*").order("title");
-      setPrograms(data || []);
-    } else {
-      setPrograms(mockPrograms);
-    }
+    setError(null);
+    const { data, error: err } = await dbCall({ table: "programs", op: "select", orderBy: "title" });
+    if (err) setError(err);
+    setPrograms(data || []);
     setLoading(false);
   };
 
@@ -46,25 +48,24 @@ export default function ProgramsAdmin() {
 
   const save = async () => {
     setSaving(true);
+    setError(null);
     const payload = { ...form, features: featInput.split("\n").map((f) => f.trim()).filter(Boolean) };
-    if (isSupabaseConfigured) {
-      if (editing) await supabase.from("programs").update(payload).eq("id", editing.id);
-      else await supabase.from("programs").insert([payload]);
-      await fetchData();
-    } else {
-      if (editing) setPrograms((prev) => prev.map((p) => (p.id === editing.id ? { ...p, ...payload } : p)));
-      else setPrograms((prev) => [...prev, { ...payload, id: Date.now().toString() }]);
-    }
-    setSaving(false); setShowForm(false);
+    const { error: err } = editing
+      ? await dbCall({ table: "programs", op: "update", id: editing.id, data: payload })
+      : await dbCall({ table: "programs", op: "insert", data: payload });
+    if (err) { setError(err); setSaving(false); return; }
+    await fetchData();
+    setSaving(false);
+    setShowForm(false);
   };
 
   const toggleActive = async (p: ProgramItem) => {
-    if (isSupabaseConfigured) await supabase.from("programs").update({ is_active: !p.is_active }).eq("id", p.id);
+    await dbCall({ table: "programs", op: "update", id: p.id, data: { is_active: !p.is_active } });
     setPrograms((prev) => prev.map((x) => (x.id === p.id ? { ...x, is_active: !x.is_active } : x)));
   };
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("programs").delete().eq("id", id);
+    await dbCall({ table: "programs", op: "delete", id });
     setPrograms((prev) => prev.filter((p) => p.id !== id));
     setDeleteId(null);
   };
@@ -85,6 +86,10 @@ export default function ProgramsAdmin() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <div className="px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+      )}
 
       {loading ? (
         <div className="py-16 text-center text-gray-500">Loading…</div>
@@ -130,6 +135,9 @@ export default function ProgramsAdmin() {
               <h3 className="font-black text-white flex items-center gap-2"><FlaskConical className="w-4 h-4 text-primary-400" />{editing ? "Edit" : "Add"} Program</h3>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
+            {error && (
+              <div className="mb-4 px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+            )}
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="text-xs font-bold text-gray-400 mb-1.5 block">Program Title</label><input value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} className={inputClass} /></div>

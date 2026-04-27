@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, Eye, Trash2, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 import type { Application } from "@/lib/types";
 import StudentModal from "@/components/admin/StudentModal";
 
-const mockEnrolled: Application[] = [
-  { id: "def456", created_at: new Date(Date.now() - 86400000).toISOString(), name: "Fatima Zainab", father_name: "Zainab Malik", cnic: "31201-7654321-2", email: "fatima@example.com", phone: "+92 311-7654321", address: "Model Town, Bahawalpur", program: "evening-coaching", test_type: null, matric_marks: 950, matric_total: 1100, inter_marks: null, inter_total: 1100, school_name: "Govt. Girls School", college_name: null, batch_preference: "Evening Batch A (4-6PM)", emergency_contact: null, status: "enrolled", notes: null },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 export default function EnrolledPage() {
   const [students, setStudents] = useState<Application[]>([]);
@@ -20,19 +20,15 @@ export default function EnrolledPage() {
 
   const fetchEnrolled = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("applications").select("*").eq("status", "enrolled").order("created_at", { ascending: false });
-      setStudents(data || []);
-    } else {
-      setStudents(mockEnrolled);
-    }
+    const { data } = await dbCall({ table: "applications", op: "select", filter: { status: "enrolled" }, orderBy: { col: "created_at", asc: false } });
+    setStudents(data || []);
     setLoading(false);
   };
 
   useEffect(() => { fetchEnrolled(); }, []);
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("applications").delete().eq("id", id);
+    await dbCall({ table: "applications", op: "delete", id });
     setStudents((prev) => prev.filter((s) => s.id !== id));
     setConfirmDelete(null);
   };

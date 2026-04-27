@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Users, GraduationCap, Trophy, Newspaper, Bell, Clock, TrendingUp, RefreshCw, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
+
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 interface DashboardStats {
   totalApplications: number;
@@ -60,54 +64,34 @@ export default function DashboardPage() {
   const fetchData = async () => {
     setLoading(true);
 
-    if (isSupabaseConfigured) {
-      const [
-        { data: allApps },
-        { data: enrolled },
-        { data: rejected },
-        { count: posCount },
-        { count: newsCount },
-        { count: annCount },
-      ] = await Promise.all([
-        supabase.from("applications").select("id, name, program, status, created_at").order("created_at", { ascending: false }),
-        supabase.from("applications").select("id", { count: "exact" }).eq("status", "enrolled"),
-        supabase.from("applications").select("id", { count: "exact" }).eq("status", "rejected"),
-        supabase.from("top_positions").select("*", { count: "exact", head: true }),
-        supabase.from("news").select("*", { count: "exact", head: true }),
-        supabase.from("announcements").select("*", { count: "exact", head: true }),
-      ]);
+    const [
+      { data: allApps },
+      { data: positions },
+      { data: newsData },
+      { data: annData },
+    ] = await Promise.all([
+      dbCall({ table: "applications", op: "select", fields: "id, name, program, status, created_at", orderBy: { col: "created_at", asc: false } }),
+      dbCall({ table: "top_positions", op: "select", fields: "id" }),
+      dbCall({ table: "news", op: "select", fields: "id" }),
+      dbCall({ table: "announcements", op: "select", fields: "id" }),
+    ]);
 
-      const apps = allApps || [];
-      const pending = apps.filter((a) => a.status === "applied").length;
+    const apps = allApps || [];
+    const pending  = apps.filter((a: RecentApplication) => a.status === "applied").length;
+    const enrolled = apps.filter((a: RecentApplication) => a.status === "enrolled").length;
+    const rejected = apps.filter((a: RecentApplication) => a.status === "rejected").length;
 
-      setStats({
-        totalApplications:   apps.length,
-        pendingApplications: pending,
-        enrolledStudents:    enrolled?.length ?? 0,
-        rejectedApplications: rejected?.length ?? 0,
-        topPositions:  posCount  ?? 0,
-        newsArticles:  newsCount ?? 0,
-        announcements: annCount  ?? 0,
-      });
+    setStats({
+      totalApplications:    apps.length,
+      pendingApplications:  pending,
+      enrolledStudents:     enrolled,
+      rejectedApplications: rejected,
+      topPositions:  (positions || []).length,
+      newsArticles:  (newsData  || []).length,
+      announcements: (annData   || []).length,
+    });
 
-      setRecent(apps.slice(0, 6));
-    } else {
-      // Mock data when Supabase not configured
-      setStats({
-        totalApplications: 2,
-        pendingApplications: 1,
-        enrolledStudents: 1,
-        rejectedApplications: 0,
-        topPositions: 12,
-        newsArticles: 4,
-        announcements: 3,
-      });
-      setRecent([
-        { id: "1", name: "Ahmad Hassan",  program: "entry-test",       status: "applied",  created_at: new Date().toISOString() },
-        { id: "2", name: "Fatima Zainab", program: "evening-coaching", status: "enrolled", created_at: new Date(Date.now() - 86400000).toISOString() },
-      ]);
-    }
-
+    setRecent(apps.slice(0, 6));
     setLastRefreshed(new Date());
     setLoading(false);
   };

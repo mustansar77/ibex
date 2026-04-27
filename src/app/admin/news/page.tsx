@@ -3,17 +3,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Newspaper, Eye, EyeOff, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface NewsItem { id: string; title: string; content: string; category: string; is_published: boolean; published_at: string; }
 const cats = ["Results","Admissions","Scholarship","Achievement","Events","Facility","General"];
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";
 const empty = { title: "", content: "", category: "General", is_published: true, published_at: new Date().toISOString().split("T")[0] };
 
-const mockNews: NewsItem[] = [
-  { id: "1", title: "MDCAT 2024 Results — IBEX Students Shine", content: "97% of IBEX students qualified MDCAT 2024.", category: "Results", is_published: true, published_at: "2024-12-28" },
-  { id: "2", title: "T Session Scholarship Applications Open", content: "Merit-based scholarships of 50%-100% now available.", category: "Scholarship", is_published: true, published_at: "2024-12-15" },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 export default function NewsAdmin() {
   const [news, setNews]         = useState<NewsItem[]>([]);
@@ -26,12 +25,8 @@ export default function NewsAdmin() {
 
   const fetchData = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("news").select("*").order("published_at", { ascending: false });
-      setNews(data || []);
-    } else {
-      setNews(mockNews);
-    }
+    const { data } = await dbCall({ table: "news", op: "select", orderBy: { col: "published_at", asc: false } });
+    setNews(data || []);
     setLoading(false);
   };
 
@@ -46,26 +41,19 @@ export default function NewsAdmin() {
   const save = async () => {
     setSaving(true);
     const payload = { ...form, published_at: form.published_at ? new Date(form.published_at).toISOString() : new Date().toISOString() };
-    if (isSupabaseConfigured) {
-      if (editing) await supabase.from("news").update(payload).eq("id", editing.id);
-      else await supabase.from("news").insert([payload]);
-      await fetchData();
-    } else {
-      if (editing) setNews((prev) => prev.map((n) => (n.id === editing.id ? { ...n, ...form } : n)));
-      else setNews((prev) => [...prev, { ...form, id: Date.now().toString() }]);
-    }
+    if (editing) await dbCall({ table: "news", op: "update", id: editing.id, data: payload });
+    else await dbCall({ table: "news", op: "insert", data: payload });
+    await fetchData();
     setSaving(false); setShowForm(false);
   };
 
   const togglePublish = async (n: NewsItem) => {
-    if (isSupabaseConfigured) {
-      await supabase.from("news").update({ is_published: !n.is_published }).eq("id", n.id);
-    }
+    await dbCall({ table: "news", op: "update", id: n.id, data: { is_published: !n.is_published } });
     setNews((prev) => prev.map((x) => (x.id === n.id ? { ...x, is_published: !x.is_published } : x)));
   };
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("news").delete().eq("id", id);
+    await dbCall({ table: "news", op: "delete", id });
     setNews((prev) => prev.filter((n) => n.id !== id));
     setDeleteId(null);
   };

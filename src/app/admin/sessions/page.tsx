@@ -3,17 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Clock, BadgePercent, Users, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface SessionItem { id: string; slug: string; title: string; subtitle: string; description: string; duration: string; timing: string; eligibility: string; scholarship_info: string; features: string[]; is_active: boolean; }
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";
 const emptySession: Omit<SessionItem, "id"> = { slug: "", title: "", subtitle: "", description: "", duration: "", timing: "", eligibility: "", scholarship_info: "", features: [], is_active: true };
 
-const mockSessions: SessionItem[] = [
-  { id: "1", slug: "pre-9th", title: "Pre 9th Session", subtitle: "Head Start Before Grade 9", description: "Preparatory session before Grade 9.", duration: "3 Months", timing: "8AM–12PM", eligibility: "Grade 8 completed", scholarship_info: "", features: ["Mathematics Foundation","Science Concepts"], is_active: true },
-  { id: "2", slug: "r-session", title: "R Session", subtitle: "Regular Academic Session", description: "Full year coaching for Matric & Inter.", duration: "Full Year", timing: "4PM–8PM", eligibility: "Matric / Inter Students", scholarship_info: "", features: ["Full Curriculum","Board Exam Focus"], is_active: true },
-  { id: "3", slug: "t-session-scholarship", title: "T Session — Scholarship", subtitle: "Merit-Based Scholarships", description: "Scholarships for talented students.", duration: "Full Year", timing: "Morning & Evening", eligibility: "80%+ marks required", scholarship_info: "50%–100% fee waiver based on merit", features: ["Merit Scholarship","Top Faculty"], is_active: true },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return res.json();
+}
 
 export default function SessionsAdmin() {
   const [sessions, setSessions] = useState<SessionItem[]>([]);
@@ -24,15 +26,14 @@ export default function SessionsAdmin() {
   const [form, setForm]         = useState<Omit<SessionItem, "id">>(emptySession);
   const [featInput, setFeatInput] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [error, setError]       = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("sessions").select("*").order("title");
-      setSessions(data || []);
-    } else {
-      setSessions(mockSessions);
-    }
+    setError(null);
+    const { data, error: err } = await dbCall({ table: "sessions", op: "select", orderBy: "title" });
+    if (err) setError(err);
+    setSessions(data || []);
     setLoading(false);
   };
 
@@ -47,25 +48,24 @@ export default function SessionsAdmin() {
 
   const save = async () => {
     setSaving(true);
+    setError(null);
     const payload = { ...form, features: featInput.split("\n").map((f) => f.trim()).filter(Boolean) };
-    if (isSupabaseConfigured) {
-      if (editing) await supabase.from("sessions").update(payload).eq("id", editing.id);
-      else await supabase.from("sessions").insert([payload]);
-      await fetchData();
-    } else {
-      if (editing) setSessions((prev) => prev.map((s) => (s.id === editing.id ? { ...s, ...payload } : s)));
-      else setSessions((prev) => [...prev, { ...payload, id: Date.now().toString() }]);
-    }
-    setSaving(false); setShowForm(false);
+    const { error: err } = editing
+      ? await dbCall({ table: "sessions", op: "update", id: editing.id, data: payload })
+      : await dbCall({ table: "sessions", op: "insert", data: payload });
+    if (err) { setError(err); setSaving(false); return; }
+    await fetchData();
+    setSaving(false);
+    setShowForm(false);
   };
 
   const toggleActive = async (s: SessionItem) => {
-    if (isSupabaseConfigured) await supabase.from("sessions").update({ is_active: !s.is_active }).eq("id", s.id);
+    await dbCall({ table: "sessions", op: "update", id: s.id, data: { is_active: !s.is_active } });
     setSessions((prev) => prev.map((x) => (x.id === s.id ? { ...x, is_active: !x.is_active } : x)));
   };
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("sessions").delete().eq("id", id);
+    await dbCall({ table: "sessions", op: "delete", id });
     setSessions((prev) => prev.filter((s) => s.id !== id));
     setDeleteId(null);
   };
@@ -86,6 +86,10 @@ export default function SessionsAdmin() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <div className="px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+      )}
 
       {loading ? (
         <div className="py-16 text-center text-gray-500">Loading…</div>
@@ -132,6 +136,9 @@ export default function SessionsAdmin() {
               <h3 className="font-black text-white flex items-center gap-2"><Clock className="w-4 h-4 text-amber-400" />{editing ? "Edit" : "Add"} Session</h3>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
+            {error && (
+              <div className="mb-4 px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+            )}
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div><label className="text-xs font-bold text-gray-400 mb-1.5 block">Session Title</label><input value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} className={inputClass} /></div>

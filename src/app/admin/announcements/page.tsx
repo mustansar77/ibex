@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Bell, ToggleLeft, ToggleRight, RefreshCw } from "lucide-react";
-import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface Ann { id: string; title: string; content: string; type: string; is_active: boolean; published_at: string; }
 const types = ["announcement","update","alert"];
@@ -11,10 +10,10 @@ const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray
 const empty = { title: "", content: "", type: "announcement", is_active: true, published_at: new Date().toISOString().split("T")[0] };
 const typeBadge: Record<string, string> = { announcement: "bg-blue-900/40 text-blue-400", update: "bg-green-900/40 text-green-400", alert: "bg-red-900/40 text-red-400" };
 
-const mockAnns: Ann[] = [
-  { id: "1", title: "Fee Submission Deadline — January 31", content: "All enrolled students must submit fees by Jan 31.", type: "alert", is_active: true, published_at: "2025-01-05" },
-  { id: "2", title: "Parent-Teacher Meeting — Feb 5", content: "PTM scheduled for Feb 5 from 10 AM to 1 PM.", type: "announcement", is_active: true, published_at: "2024-12-20" },
-];
+async function dbCall(body: object) {
+  const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  return res.json();
+}
 
 export default function AnnouncementsAdmin() {
   const [anns, setAnns]         = useState<Ann[]>([]);
@@ -27,12 +26,8 @@ export default function AnnouncementsAdmin() {
 
   const fetchData = async () => {
     setLoading(true);
-    if (isSupabaseConfigured) {
-      const { data } = await supabase.from("announcements").select("*").order("published_at", { ascending: false });
-      setAnns(data || []);
-    } else {
-      setAnns(mockAnns);
-    }
+    const { data } = await dbCall({ table: "announcements", op: "select", orderBy: { col: "published_at", asc: false } });
+    setAnns(data || []);
     setLoading(false);
   };
 
@@ -47,24 +42,19 @@ export default function AnnouncementsAdmin() {
   const save = async () => {
     setSaving(true);
     const payload = { ...form, published_at: form.published_at ? new Date(form.published_at).toISOString() : new Date().toISOString() };
-    if (isSupabaseConfigured) {
-      if (editing) await supabase.from("announcements").update(payload).eq("id", editing.id);
-      else await supabase.from("announcements").insert([payload]);
-      await fetchData();
-    } else {
-      if (editing) setAnns((prev) => prev.map((a) => (a.id === editing.id ? { ...a, ...form } : a)));
-      else setAnns((prev) => [...prev, { ...form, id: Date.now().toString() }]);
-    }
+    if (editing) await dbCall({ table: "announcements", op: "update", id: editing.id, data: payload });
+    else await dbCall({ table: "announcements", op: "insert", data: payload });
+    await fetchData();
     setSaving(false); setShowForm(false);
   };
 
   const toggle = async (a: Ann) => {
-    if (isSupabaseConfigured) await supabase.from("announcements").update({ is_active: !a.is_active }).eq("id", a.id);
+    await dbCall({ table: "announcements", op: "update", id: a.id, data: { is_active: !a.is_active } });
     setAnns((prev) => prev.map((x) => (x.id === a.id ? { ...x, is_active: !x.is_active } : x)));
   };
 
   const handleDelete = async (id: string) => {
-    if (isSupabaseConfigured) await supabase.from("announcements").delete().eq("id", id);
+    await dbCall({ table: "announcements", op: "delete", id });
     setAnns((prev) => prev.filter((a) => a.id !== id));
     setDeleteId(null);
   };
