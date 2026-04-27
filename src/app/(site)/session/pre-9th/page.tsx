@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SessionDetailPage, { SupabaseSession } from "@/components/sections/SessionDetailPage";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 const FALLBACK: SupabaseSession = {
   id: "pre-9th",

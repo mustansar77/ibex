@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ProgramDetailPage, { SupabaseProgram } from "@/components/sections/ProgramDetailPage";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 const FALLBACK: SupabaseProgram = {
   id: "entry-test",
