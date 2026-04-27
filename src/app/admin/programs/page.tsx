@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, FlaskConical, Clock, Users, BookOpen, RefreshCw } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface ProgramItem { id: string; slug: string; title: string; tagline: string; description: string; duration: string; timing: string; batch_size: string; features: string[]; is_active: boolean; }
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";

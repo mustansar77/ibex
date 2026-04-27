@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Trophy, RefreshCw } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface Position {
   id: string;

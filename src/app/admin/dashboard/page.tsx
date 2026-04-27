@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Users, GraduationCap, Trophy, Newspaper, Bell, Clock, TrendingUp, RefreshCw, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface DashboardStats {
   totalApplications: number;

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, Eye, RefreshCw, Filter } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 import type { Application } from "@/lib/types";
 import StudentModal from "@/components/admin/StudentModal";
 

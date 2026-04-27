@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Newspaper, Eye, EyeOff, RefreshCw } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface NewsItem { id: string; title: string; content: string; category: string; is_published: boolean; published_at: string; }
 const cats = ["Results","Admissions","Scholarship","Achievement","Events","Facility","General"];

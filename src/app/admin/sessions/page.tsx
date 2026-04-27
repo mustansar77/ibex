@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Clock, BadgePercent, Users, RefreshCw } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface SessionItem { id: string; slug: string; title: string; subtitle: string; description: string; duration: string; timing: string; eligibility: string; scholarship_info: string; features: string[]; is_active: boolean; }
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 text-white text-sm focus:outline-none focus:border-primary-500";

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Plus, Pencil, Trash2, X, Bell, ToggleLeft, ToggleRight, RefreshCw } from "lucide-react";
-import { supabase, isSupabaseConfigured } from "@/lib/supabase";
+import { supabaseAdmin as supabase, isSupabaseConfigured } from "@/lib/supabase";
 
 interface Ann { id: string; title: string; content: string; type: string; is_active: boolean; published_at: string; }
 const types = ["announcement","update","alert"];
