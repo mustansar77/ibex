@@ -44,8 +44,8 @@ const slides = [
     ctaHref: "/apply/evening-coaching",
     secondary: "View Program",
     secondaryHref: "/programs/evening-coaching",
-    gradient: "from-[#12003d] via-[#2d0077] to-[#4a00b4]",
-    accentColor: "text-blue-200",
+    gradient: "from-[#001a3d] via-[#002d6b] to-[#003d8a]",
+    accentColor: "text-blue-300",
     stat: { val: "5000+", label: "Students Coached" },
   },
   {
@@ -58,8 +58,8 @@ const slides = [
     ctaHref: "/session/t-session-scholarship",
     secondary: "Check Eligibility",
     secondaryHref: "/session/t-session-scholarship",
-    gradient: "from-[#1a0000] via-[#7a2000] to-[#a33000]",
-    accentColor: "text-primary-400",
+    gradient: "from-[#001020] via-[#001e40] to-[#0052a3]",
+    accentColor: "text-blue-200",
     stat: { val: "100%", label: "Max Scholarship" },
   },
   {
@@ -72,8 +72,8 @@ const slides = [
     ctaHref: "/top-position",
     secondary: "Contact Us",
     secondaryHref: "#contact",
-    gradient: "from-[#003300] via-[#005200] to-[#007a00]",
-    accentColor: "text-green-300",
+    gradient: "from-[#002050] via-[#003d7a] to-[#0060b0]",
+    accentColor: "text-blue-200",
     stat: { val: "10+", label: "Years Strong" },
   },
 ];
@@ -119,7 +119,7 @@ export default function HeroCarousel() {
       <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }} transition={{ duration: 8, repeat: Infinity }}
         className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-white/10 blur-3xl pointer-events-none" />
       <motion.div animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 6, repeat: Infinity, delay: 2 }}
-        className="absolute bottom-1/4 left-1/4 w-80 h-80 rounded-full bg-accent-500/20 blur-3xl pointer-events-none" />
+        className="absolute bottom-1/4 left-1/4 w-80 h-80 rounded-full bg-primary-300/10 blur-3xl pointer-events-none" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 w-full">
@@ -134,7 +134,7 @@ export default function HeroCarousel() {
             >
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-sm font-medium mb-6">
-                <div className="w-2 h-2 rounded-full bg-accent-500 animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 {slide.badge}
               </div>
 
@@ -153,7 +153,7 @@ export default function HeroCarousel() {
               <div className="flex flex-wrap gap-4 mb-12">
                 <Link
                   href={slide.ctaHref}
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent-500 hover:bg-accent-600 text-white font-bold text-base shadow-lg shadow-accent-500/30 transition-all group"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-primary-800 font-bold text-base shadow-lg shadow-black/20 transition-all group"
                 >
                   {slide.cta}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -211,7 +211,7 @@ export default function HeroCarousel() {
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`rounded-full transition-all duration-300 ${i === current ? "w-8 h-2.5 bg-accent-500" : "w-2.5 h-2.5 bg-white/40"}`}
+            className={`rounded-full transition-all duration-300 ${i === current ? "w-8 h-2.5 bg-white" : "w-2.5 h-2.5 bg-white/40"}`}
           />
         ))}
       </div>

@@ -8,7 +8,7 @@ interface Ann { id: string; title: string; content: string; type: string; is_act
 const types = ["announcement","update","alert"];
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-primary-500";
 const empty = { title: "", content: "", type: "announcement", is_active: true, published_at: new Date().toISOString().split("T")[0] };
-const typeBadge: Record<string, string> = { announcement: "bg-blue-900/40 text-blue-400", update: "bg-green-900/40 text-green-400", alert: "bg-red-900/40 text-red-400" };
+const typeBadge: Record<string, string> = { announcement: "bg-blue-900/40 text-blue-400", update: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400", alert: "bg-red-900/40 text-red-400" };
 
 async function dbCall(body: object) {
   const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -117,7 +117,7 @@ export default function AnnouncementsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-full max-w-md">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Bell className="w-4 h-4 text-amber-400" />{editing ? "Edit" : "Add"} Announcement</h3>
+              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Bell className="w-4 h-4 text-primary-600 dark:text-primary-400" />{editing ? "Edit" : "Add"} Announcement</h3>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
             <div className="space-y-4">
@@ -148,7 +148,7 @@ export default function AnnouncementsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-80">
             <h3 className="font-black text-gray-900 dark:text-white mb-2">Delete Announcement?</h3>
-            <p className="text-sm text-gray-400 mb-5">This will remove it from the website.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">This will remove it from the website.</p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
               <button onClick={() => handleDelete(deleteId)} className="flex-1 py-2.5 rounded-xl bg-red-700 text-white font-bold text-sm">Delete</button>

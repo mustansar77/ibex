@@ -152,10 +152,17 @@ export default function Navbar() {
   const toggleDropdown = (name: string) => setOpenDropdown((prev) => (prev === name ? null : name));
   const isActive = (href: string) => pathname.startsWith(href);
 
-  const isHome = pathname === "/";
-  const navTextClass  = scrolled || isHome ? "text-white" : "text-gray-800 dark:text-gray-100";
-  const navHoverClass = scrolled || isHome ? "hover:text-white/70" : "hover:text-primary-700 dark:hover:text-primary-300";
-  const underlineClass = scrolled || isHome ? "bg-white" : "bg-primary-700 dark:bg-primary-400";
+  // Pages whose hero is a dark blue gradient — navbar must always be white text
+  const hasDarkHero = pathname === "/" ||
+    pathname.startsWith("/session") ||
+    pathname.startsWith("/programs") ||
+    pathname.startsWith("/whats-new") ||
+    pathname.startsWith("/top-position") ||
+    pathname.startsWith("/news");
+
+  const navTextClass   = scrolled || hasDarkHero ? "text-white" : "text-gray-800 dark:text-gray-100";
+  const navHoverClass  = scrolled || hasDarkHero ? "hover:text-blue-200" : "hover:text-primary-700 dark:hover:text-primary-300";
+  const underlineClass = scrolled || hasDarkHero ? "bg-white" : "bg-primary-700 dark:bg-primary-400";
 
   return (
     <motion.header
@@ -176,8 +183,8 @@ export default function Navbar() {
               <Image src="/logo.jpg" alt="IBEX Institute Logo" width={40} height={40} className="w-full h-full object-cover" />
             </div>
             <div className="leading-tight">
-              <span className={`block text-xl font-black tracking-wide ${scrolled || isHome ? "text-white" : "text-primary-700 dark:text-primary-300"}`}>IBEX</span>
-              <span className={`block text-[10px] font-medium tracking-widest uppercase -mt-0.5 ${scrolled || isHome ? "text-white/60" : "text-gray-500 dark:text-gray-400"}`}>Institute</span>
+              <span className={`block text-xl font-black tracking-wide ${scrolled || hasDarkHero ? "text-white" : "text-primary-700 dark:text-primary-300"}`}>IBEX</span>
+              <span className={`block text-[10px] font-medium tracking-widest uppercase -mt-0.5 ${scrolled || hasDarkHero ? "text-white/60" : "text-gray-500 dark:text-gray-400"}`}>Institute</span>
             </div>
           </Link>
 

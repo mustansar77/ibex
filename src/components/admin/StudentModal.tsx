@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Phone, Mail, MapPin, BookOpen, GraduationCap } from "lucide-react";
@@ -6,7 +6,7 @@ import type { Application } from "@/lib/types";
 
 const statusColors: Record<string, string> = {
   applied: "bg-blue-900/40 text-blue-400 border border-blue-800",
-  enrolled: "bg-green-900/40 text-green-400 border border-green-800",
+  enrolled: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400 border border-green-800",
   rejected: "bg-red-900/40 text-red-400 border border-red-800",
 };
 

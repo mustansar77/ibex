@@ -88,7 +88,7 @@ export default function SessionsAdmin() {
       </div>
 
       {error && (
-        <div className="px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+        <div className="px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm">{error}</div>
       )}
 
       {loading ? (
@@ -102,25 +102,25 @@ export default function SessionsAdmin() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-1 flex-wrap">
-                    <Clock className="w-5 h-5 text-amber-400 shrink-0" />
+                    <Clock className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0" />
                     <h2 className="text-lg font-black text-gray-900 dark:text-white">{s.title}</h2>
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${s.is_active ? "bg-green-900/40 text-green-400" : "bg-gray-800 text-gray-500"}`}>{s.is_active ? "Active" : "Inactive"}</span>
-                    {s.scholarship_info && <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-900/30 text-amber-400 text-xs font-bold"><BadgePercent className="w-3 h-3" /> Scholarship</span>}
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${s.is_active ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400" : "bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500"}`}>{s.is_active ? "Active" : "Inactive"}</span>
+                    {s.scholarship_info && <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400 text-xs font-bold"><BadgePercent className="w-3 h-3" /> Scholarship</span>}
                   </div>
-                  <p className="text-sm text-primary-400 font-medium mb-2">{s.subtitle}</p>
-                  <p className="text-sm text-gray-400 mb-3 line-clamp-2">{s.description}</p>
+                  <p className="text-sm text-primary-600 dark:text-primary-400 font-medium mb-2">{s.subtitle}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">{s.description}</p>
                   <div className="flex flex-wrap gap-4 text-xs text-gray-400 mb-3">
                     {s.duration && <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-gray-500" />{s.duration}</span>}
                     {s.eligibility && <span className="flex items-center gap-1.5"><Users className="w-3.5 h-3.5 text-gray-500" />{s.eligibility}</span>}
                   </div>
-                  {s.scholarship_info && <p className="text-xs text-amber-400 bg-amber-900/20 px-3 py-1.5 rounded-lg mb-3">{s.scholarship_info}</p>}
+                  {s.scholarship_info && <p className="text-xs text-primary-700 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-3 py-1.5 rounded-lg mb-3">{s.scholarship_info}</p>}
                   <div className="flex flex-wrap gap-2">
-                    {(s.features || []).map((f) => (<span key={f} className="px-2.5 py-0.5 rounded-full bg-amber-900/20 text-amber-300 text-xs font-medium">{f}</span>))}
+                    {(s.features || []).map((f) => (<span key={f} className="px-2.5 py-0.5 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/20 dark:text-primary-300 text-xs font-medium">{f}</span>))}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 shrink-0">
                   <button onClick={() => openEdit(s)} className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                  <button onClick={() => toggleActive(s)} className={`p-2 rounded-lg text-xs font-bold transition-colors ${s.is_active ? "bg-green-900/30 text-green-400 hover:bg-green-900/60" : "bg-gray-800 text-gray-500 hover:text-white"}`}>{s.is_active ? "On" : "Off"}</button>
+                  <button onClick={() => toggleActive(s)} className={`p-2 rounded-lg text-xs font-bold transition-colors ${s.is_active ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/60" : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white"}`}>{s.is_active ? "On" : "Off"}</button>
                   <button onClick={() => setDeleteId(s.id)} className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
                 </div>
               </div>
@@ -133,11 +133,11 @@ export default function SessionsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Clock className="w-4 h-4 text-amber-400" />{editing ? "Edit" : "Add"} Session</h3>
+              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Clock className="w-4 h-4 text-primary-600 dark:text-primary-400" />{editing ? "Edit" : "Add"} Session</h3>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
             {error && (
-              <div className="mb-4 px-4 py-3 rounded-xl bg-red-950/40 border border-red-800 text-red-400 text-sm">{error}</div>
+              <div className="mb-4 px-4 py-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm">{error}</div>
             )}
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -172,7 +172,7 @@ export default function SessionsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-80">
             <h3 className="font-black text-gray-900 dark:text-white mb-2">Delete Session?</h3>
-            <p className="text-sm text-gray-400 mb-5">This will remove the session from the website.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">This will remove the session from the website.</p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
               <button onClick={() => handleDelete(deleteId)} className="flex-1 py-2.5 rounded-xl bg-red-700 hover:bg-red-600 text-white font-bold text-sm">Delete</button>

@@ -96,7 +96,7 @@ export default function TopPositionsAdmin() {
                 {positions.map((p, i) => (
                   <motion.tr key={p.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }} className="hover:bg-gray-50 dark:hover:bg-gray-800/30">
                     <td className="px-4 py-3.5">
-                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white ${p.rank === 1 ? "bg-amber-500" : p.rank === 2 ? "bg-gray-500" : p.rank === 3 ? "bg-amber-800" : "bg-primary-700"}`}>{p.rank}</div>
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black text-white ${p.rank === 1 ? "bg-primary-500" : p.rank === 2 ? "bg-gray-500" : p.rank === 3 ? "bg-primary-800" : "bg-primary-700"}`}>{p.rank}</div>
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2">
@@ -106,7 +106,7 @@ export default function TopPositionsAdmin() {
                     </td>
                     <td className="px-4 py-3.5 text-sm font-bold text-primary-400">{p.marks_obtained}/{p.total_marks}</td>
                     <td className="px-4 py-3.5 text-sm text-gray-300">{p.board}</td>
-                    <td className="px-4 py-3.5"><span className="px-2 py-0.5 rounded-full bg-primary-900/40 text-primary-400 text-xs font-bold">{p.test_type}</span></td>
+                    <td className="px-4 py-3.5"><span className="px-2 py-0.5 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-400 text-xs font-bold">{p.test_type}</span></td>
                     <td className="px-4 py-3.5 text-sm text-gray-400">{p.year}</td>
                     <td className="px-4 py-3.5">
                       <div className="flex gap-2">
@@ -126,7 +126,7 @@ export default function TopPositionsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-400" />{editing ? "Edit" : "Add"} Position</h3>
+              <h3 className="font-black text-gray-900 dark:text-white flex items-center gap-2"><Trophy className="w-4 h-4 text-primary-600 dark:text-primary-400" />{editing ? "Edit" : "Add"} Position</h3>
               <button onClick={() => setShowForm(false)}><X className="w-5 h-5 text-gray-400" /></button>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -155,7 +155,7 @@ export default function TopPositionsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-80">
             <h3 className="font-black text-gray-900 dark:text-white mb-2">Confirm Delete</h3>
-            <p className="text-sm text-gray-400 mb-5">Remove this position holder from the website?</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">Remove this position holder from the website?</p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
               <button onClick={() => handleDelete(deleteId)} className="flex-1 py-2.5 rounded-xl bg-red-700 hover:bg-red-600 text-white font-bold text-sm">Delete</button>

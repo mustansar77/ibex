@@ -8,7 +8,7 @@ import StudentModal from "@/components/admin/StudentModal";
 
 const statusColors: Record<string, string> = {
   applied: "bg-blue-900/40 text-blue-400",
-  enrolled: "bg-green-900/40 text-green-400",
+  enrolled: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
   rejected: "bg-red-900/40 text-red-400",
 };
 

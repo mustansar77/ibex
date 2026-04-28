@@ -92,9 +92,9 @@ export default function NewsAdmin() {
                 {news.map((n, i) => (
                   <motion.tr key={n.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }} className="hover:bg-gray-50 dark:hover:bg-gray-800/30">
                     <td className="px-4 py-3.5"><div className="text-sm font-semibold text-gray-900 dark:text-white">{n.title}</div><div className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 line-clamp-1">{n.content}</div></td>
-                    <td className="px-4 py-3.5"><span className="px-2.5 py-0.5 rounded-full bg-primary-900/40 text-primary-400 text-xs font-bold">{n.category}</span></td>
+                    <td className="px-4 py-3.5"><span className="px-2.5 py-0.5 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-400 text-xs font-bold">{n.category}</span></td>
                     <td className="px-4 py-3.5 text-sm text-gray-400">{n.published_at?.split("T")[0] ?? ""}</td>
-                    <td className="px-4 py-3.5"><span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${n.is_published ? "bg-green-900/40 text-green-400" : "bg-gray-800 text-gray-500"}`}>{n.is_published ? "Published" : "Draft"}</span></td>
+                    <td className="px-4 py-3.5"><span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${n.is_published ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400" : "bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500"}`}>{n.is_published ? "Published" : "Draft"}</span></td>
                     <td className="px-4 py-3.5">
                       <div className="flex gap-2">
                         <button onClick={() => togglePublish(n)} className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title={n.is_published ? "Unpublish" : "Publish"}>{n.is_published ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}</button>
@@ -145,7 +145,7 @@ export default function NewsAdmin() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-80">
             <h3 className="font-black text-gray-900 dark:text-white mb-2">Delete News?</h3>
-            <p className="text-sm text-gray-400 mb-5">This will remove the article from the website.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">This will remove the article from the website.</p>
             <div className="flex gap-3">
               <button onClick={() => setDeleteId(null)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
               <button onClick={() => handleDelete(deleteId)} className="flex-1 py-2.5 rounded-xl bg-red-700 text-white font-bold text-sm">Delete</button>

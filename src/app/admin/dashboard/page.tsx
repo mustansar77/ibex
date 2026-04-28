@@ -46,7 +46,7 @@ const statusIcon: Record<string, React.ReactElement> = {
 
 const statusBadge: Record<string, string> = {
   applied:  "bg-blue-900/40 text-blue-400",
-  enrolled: "bg-green-900/40 text-green-400",
+  enrolled: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
   rejected: "bg-red-900/40 text-red-400",
 };
 
@@ -115,7 +115,7 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-black text-gray-900 dark:text-white">Dashboard</h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
             Welcome back, Admin.
-            <span className="ml-2 text-xs text-gray-600">
+            <span className="ml-2 text-xs text-gray-400 dark:text-gray-600">
               Last updated: {lastRefreshed.toLocaleTimeString()}
             </span>
           </p>
@@ -130,7 +130,7 @@ export default function DashboardPage() {
       {stats.pendingApplications > 0 && (
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-3 bg-amber-900/20 border border-amber-700/40 rounded-xl px-4 py-3">
-          <AlertCircle className="w-5 h-5 text-amber-400 shrink-0" />
+          <AlertCircle className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0" />
           <p className="text-sm text-amber-300">
             <span className="font-bold">{stats.pendingApplications} application{stats.pendingApplications > 1 ? "s" : ""}</span> pending review.
           </p>
@@ -171,7 +171,7 @@ export default function DashboardPage() {
           <div className="space-y-3">
             {[
               { label: "Total Received", value: stats.totalApplications,   color: "bg-blue-500",  text: "text-blue-400" },
-              { label: "Pending Review", value: stats.pendingApplications,  color: "bg-amber-500", text: "text-amber-400" },
+              { label: "Pending Review", value: stats.pendingApplications,  color: "bg-primary-500", text: "text-amber-400" },
               { label: "Enrolled",       value: stats.enrolledStudents,      color: "bg-green-500", text: "text-green-400" },
               { label: "Rejected",       value: stats.rejectedApplications, color: "bg-red-500",   text: "text-red-400" },
             ].map((row) => {

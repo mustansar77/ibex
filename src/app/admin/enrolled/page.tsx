@@ -103,7 +103,7 @@ export default function EnrolledPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 p-6 w-80">
             <h3 className="font-black text-gray-900 dark:text-white mb-2">Confirm Delete</h3>
-            <p className="text-sm text-gray-400 mb-5">This will permanently remove the student record. This cannot be undone.</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">This will permanently remove the student record. This cannot be undone.</p>
             <div className="flex gap-3">
               <button onClick={() => setConfirmDelete(null)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
               <button onClick={() => handleDelete(confirmDelete)} className="flex-1 py-2.5 rounded-xl bg-red-700 hover:bg-red-600 text-white font-bold text-sm">Delete</button>
