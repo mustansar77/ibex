@@ -7,9 +7,9 @@ import type { Application } from "@/lib/types";
 import StudentModal from "@/components/admin/StudentModal";
 
 const statusColors: Record<string, string> = {
-  applied: "bg-blue-900/40 text-blue-400",
+  applied:  "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400",
   enrolled: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-  rejected: "bg-red-900/40 text-red-400",
+  rejected: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
 };
 
 async function dbCall(body: object) {
@@ -95,7 +95,7 @@ export default function ApplicationsPage() {
                     className="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-primary-700/30 text-primary-400 flex items-center justify-center font-black text-sm">
+                        <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-700/30 dark:text-primary-400 flex items-center justify-center font-black text-sm">
                           {app.name.charAt(0)}
                         </div>
                         <div>
@@ -104,9 +104,9 @@ export default function ApplicationsPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300 capitalize">{app.program.replace("-", " ")}</td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300">{app.test_type || "—"}</td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300">{app.phone}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300 capitalize">{app.program.replace("-", " ")}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300">{app.test_type || "—"}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300">{app.phone}</td>
                     <td className="px-4 py-3.5 text-sm text-gray-400">{new Date(app.created_at).toLocaleDateString()}</td>
                     <td className="px-4 py-3.5">
                       <span className={`px-2.5 py-1 rounded-full text-xs font-bold capitalize ${statusColors[app.status]}`}>{app.status}</span>
@@ -119,7 +119,7 @@ export default function ApplicationsPage() {
                         </button>
                         {app.status !== "enrolled" && (
                           <button onClick={() => updateStatus(app.id, "enrolled")}
-                            className="px-3 py-1.5 rounded-lg bg-green-900/40 hover:bg-green-800/60 text-green-400 text-xs font-bold transition-colors">
+                            className="px-3 py-1.5 rounded-lg bg-green-100 hover:bg-green-200 text-green-700 dark:bg-green-900/40 dark:hover:bg-green-800/60 dark:text-green-400 text-xs font-bold transition-colors">
                             Enroll
                           </button>
                         )}

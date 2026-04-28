@@ -45,9 +45,9 @@ const statusIcon: Record<string, React.ReactElement> = {
 };
 
 const statusBadge: Record<string, string> = {
-  applied:  "bg-blue-900/40 text-blue-400",
+  applied:  "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400",
   enrolled: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-  rejected: "bg-red-900/40 text-red-400",
+  rejected: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
 };
 
 const programLabel: Record<string, string> = {
@@ -99,12 +99,12 @@ export default function DashboardPage() {
   useEffect(() => { fetchData(); }, []);
 
   const statCards = [
-    { label: "Total Applications", value: stats.totalApplications, icon: Users,          color: "text-blue-400",   bg: "bg-blue-950/40",   href: "/admin/applications" },
-    { label: "Pending Review",     value: stats.pendingApplications, icon: Clock,         color: "text-amber-400",  bg: "bg-amber-950/40",  href: "/admin/applications" },
-    { label: "Enrolled Students",  value: stats.enrolledStudents,   icon: GraduationCap,  color: "text-green-400",  bg: "bg-green-950/40",  href: "/admin/enrolled" },
-    { label: "Top Positions",      value: stats.topPositions,       icon: Trophy,         color: "text-yellow-400", bg: "bg-yellow-950/40", href: "/admin/top-positions" },
-    { label: "News Articles",      value: stats.newsArticles,       icon: Newspaper,      color: "text-purple-400", bg: "bg-purple-950/40", href: "/admin/news" },
-    { label: "Announcements",      value: stats.announcements,      icon: Bell,           color: "text-pink-400",   bg: "bg-pink-950/40",   href: "/admin/announcements" },
+    { label: "Total Applications", value: stats.totalApplications,  icon: Users,         color: "text-primary-700 dark:text-primary-400", bg: "bg-primary-100 dark:bg-primary-950/40", href: "/admin/applications" },
+    { label: "Pending Review",     value: stats.pendingApplications, icon: Clock,         color: "text-amber-700 dark:text-amber-400",    bg: "bg-amber-100 dark:bg-amber-950/40",    href: "/admin/applications" },
+    { label: "Enrolled Students",  value: stats.enrolledStudents,   icon: GraduationCap, color: "text-green-700 dark:text-green-400",    bg: "bg-green-100 dark:bg-green-950/40",    href: "/admin/enrolled" },
+    { label: "Top Positions",      value: stats.topPositions,       icon: Trophy,        color: "text-yellow-700 dark:text-yellow-400",  bg: "bg-yellow-100 dark:bg-yellow-950/40",  href: "/admin/top-positions" },
+    { label: "News Articles",      value: stats.newsArticles,       icon: Newspaper,     color: "text-primary-700 dark:text-primary-400", bg: "bg-primary-100 dark:bg-primary-950/40", href: "/admin/news" },
+    { label: "Announcements",      value: stats.announcements,      icon: Bell,          color: "text-primary-600 dark:text-primary-300", bg: "bg-primary-50 dark:bg-primary-950/30",  href: "/admin/announcements" },
   ];
 
   return (
@@ -129,12 +129,12 @@ export default function DashboardPage() {
       {/* Alert if pending applications */}
       {stats.pendingApplications > 0 && (
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 bg-amber-900/20 border border-amber-700/40 rounded-xl px-4 py-3">
-          <AlertCircle className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0" />
-          <p className="text-sm text-amber-300">
+          className="flex items-center gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/40 rounded-xl px-4 py-3">
+          <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
+          <p className="text-sm text-amber-800 dark:text-amber-300">
             <span className="font-bold">{stats.pendingApplications} application{stats.pendingApplications > 1 ? "s" : ""}</span> pending review.
           </p>
-          <Link href="/admin/applications" className="ml-auto text-xs font-bold text-amber-400 hover:text-amber-300 transition-colors">
+          <Link href="/admin/applications" className="ml-auto text-xs font-bold text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 transition-colors">
             Review Now →
           </Link>
         </motion.div>
@@ -170,10 +170,10 @@ export default function DashboardPage() {
           </h2>
           <div className="space-y-3">
             {[
-              { label: "Total Received", value: stats.totalApplications,   color: "bg-blue-500",  text: "text-blue-400" },
-              { label: "Pending Review", value: stats.pendingApplications,  color: "bg-primary-500", text: "text-amber-400" },
-              { label: "Enrolled",       value: stats.enrolledStudents,      color: "bg-green-500", text: "text-green-400" },
-              { label: "Rejected",       value: stats.rejectedApplications, color: "bg-red-500",   text: "text-red-400" },
+              { label: "Total Received", value: stats.totalApplications,   color: "bg-primary-500", text: "text-primary-700 dark:text-primary-400" },
+              { label: "Pending Review", value: stats.pendingApplications,  color: "bg-amber-500",   text: "text-amber-700 dark:text-amber-400" },
+              { label: "Enrolled",       value: stats.enrolledStudents,      color: "bg-green-500",   text: "text-green-700 dark:text-green-400" },
+              { label: "Rejected",       value: stats.rejectedApplications, color: "bg-red-500",     text: "text-red-700 dark:text-red-400" },
             ].map((row) => {
               const pct = stats.totalApplications > 0
                 ? Math.round((row.value / stats.totalApplications) * 100)
@@ -181,10 +181,10 @@ export default function DashboardPage() {
               return (
                 <div key={row.label}>
                   <div className="flex justify-between text-xs mb-1">
-                    <span className="text-gray-400">{row.label}</span>
+                    <span className="text-gray-500 dark:text-gray-400">{row.label}</span>
                     <span className={`font-bold ${row.text}`}>{row.value}</span>
                   </div>
-                  <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${pct}%` }}
@@ -199,8 +199,8 @@ export default function DashboardPage() {
 
           {/* Enrollment rate */}
           {stats.totalApplications > 0 && (
-            <div className="mt-5 pt-4 border-t border-gray-800 text-center">
-              <div className="text-2xl font-black text-green-400">
+            <div className="mt-5 pt-4 border-t border-gray-200 dark:border-gray-800 text-center">
+              <div className="text-2xl font-black text-green-700 dark:text-green-400">
                 {Math.round((stats.enrolledStudents / stats.totalApplications) * 100)}%
               </div>
               <div className="text-xs text-gray-500 mt-0.5">Enrollment Rate</div>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
 
         {/* Recent Applications */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-          className="lg:col-span-2 bg-gray-900 rounded-2xl border border-gray-800 p-5">
+          className="lg:col-span-2 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-black text-gray-900 dark:text-white text-sm flex items-center gap-2">
               <Users className="w-4 h-4 text-primary-400" /> Recent Applications
@@ -239,12 +239,12 @@ export default function DashboardPage() {
             <div className="space-y-2">
               {recent.map((app, i) => (
                 <motion.div key={app.id} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 + i * 0.05 }}
-                  className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-800/50 transition-colors">
-                  <div className="w-8 h-8 rounded-full bg-primary-700/30 text-primary-400 flex items-center justify-center font-black text-sm shrink-0">
+                  className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 dark:bg-primary-700/30 dark:text-primary-400 flex items-center justify-center font-black text-sm shrink-0">
                     {app.name.charAt(0)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-white truncate">{app.name}</div>
+                    <div className="text-sm font-semibold text-gray-900 dark:text-white truncate">{app.name}</div>
                     <div className="text-xs text-gray-500">{programLabel[app.program] ?? app.program}</div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
@@ -268,12 +268,12 @@ export default function DashboardPage() {
         <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Quick Actions</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {[
-            { label: "Review Applications",    href: "/admin/applications",  icon: Users,        desc: `${stats.pendingApplications} pending`,        color: "text-blue-400",   badge: stats.pendingApplications },
-            { label: "Enrolled Students",       href: "/admin/enrolled",       icon: GraduationCap, desc: `${stats.enrolledStudents} active students`,  color: "text-green-400",  badge: 0 },
-            { label: "Top Positions",           href: "/admin/top-positions",  icon: Trophy,        desc: "Manage position holders",                     color: "text-amber-400",  badge: 0 },
-            { label: "Post News",               href: "/admin/news",           icon: Newspaper,     desc: "Publish articles to website",                 color: "text-purple-400", badge: 0 },
-            { label: "Announcements",           href: "/admin/announcements",  icon: Bell,          desc: "What's New section",                          color: "text-pink-400",   badge: 0 },
-            { label: "Programs & Sessions",     href: "/admin/programs",       icon: TrendingUp,    desc: "Edit program details",                        color: "text-primary-400", badge: 0 },
+            { label: "Review Applications",    href: "/admin/applications",  icon: Users,        desc: `${stats.pendingApplications} pending`,        color: "text-primary-700 dark:text-primary-400",  badge: stats.pendingApplications },
+            { label: "Enrolled Students",       href: "/admin/enrolled",       icon: GraduationCap, desc: `${stats.enrolledStudents} active students`,  color: "text-green-700 dark:text-green-400",      badge: 0 },
+            { label: "Top Positions",           href: "/admin/top-positions",  icon: Trophy,        desc: "Manage position holders",                     color: "text-amber-700 dark:text-amber-400",      badge: 0 },
+            { label: "Post News",               href: "/admin/news",           icon: Newspaper,     desc: "Publish articles to website",                 color: "text-primary-600 dark:text-primary-400",  badge: 0 },
+            { label: "Announcements",           href: "/admin/announcements",  icon: Bell,          desc: "What's New section",                          color: "text-primary-700 dark:text-primary-300",  badge: 0 },
+            { label: "Programs & Sessions",     href: "/admin/programs",       icon: TrendingUp,    desc: "Edit program details",                        color: "text-primary-700 dark:text-primary-400",  badge: 0 },
           ].map((q, i) => (
             <motion.div key={q.href} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 + i * 0.05 }}>
               <Link href={q.href} className="block group">
@@ -284,7 +284,7 @@ export default function DashboardPage() {
                     </span>
                   )}
                   <q.icon className={`w-5 h-5 ${q.color} mb-2.5`} />
-                  <div className="font-bold text-white text-sm mb-0.5 group-hover:text-primary-300 transition-colors">{q.label}</div>
+                  <div className="font-bold text-gray-900 dark:text-white text-sm mb-0.5 group-hover:text-primary-700 dark:group-hover:text-primary-300 transition-colors">{q.label}</div>
                   <div className="text-xs text-gray-500">{q.desc}</div>
                 </div>
               </Link>

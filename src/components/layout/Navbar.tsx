@@ -47,8 +47,8 @@ const DEFAULT_PROGRAMS: NavItem[] = [
 ];
 
 const applyLinks = [
-  { label: "Apply — Entry Test Prep",  href: "/apply/entry-test",        color: "text-blue-600 dark:text-blue-400" },
-  { label: "Apply — Evening Coaching", href: "/apply/evening-coaching",   color: "text-purple-600 dark:text-purple-400" },
+  { label: "Apply — Entry Test Prep",  href: "/apply/entry-test",        color: "text-primary-700 dark:text-primary-400" },
+  { label: "Apply — Evening Coaching", href: "/apply/evening-coaching",   color: "text-primary-600 dark:text-primary-300" },
 ];
 
 // ─── dropdown component ───────────────────────────────────────────────────────
@@ -152,7 +152,7 @@ export default function Navbar() {
   const toggleDropdown = (name: string) => setOpenDropdown((prev) => (prev === name ? null : name));
   const isActive = (href: string) => pathname.startsWith(href);
 
-  // Pages whose hero is a dark blue gradient — navbar must always be white text
+  // Pages whose hero is a dark blue gradient — navbar uses dark blue background
   const hasDarkHero = pathname === "/" ||
     pathname.startsWith("/session") ||
     pathname.startsWith("/programs") ||
@@ -160,9 +160,15 @@ export default function Navbar() {
     pathname.startsWith("/top-position") ||
     pathname.startsWith("/news");
 
-  const navTextClass   = scrolled || hasDarkHero ? "text-white" : "text-gray-800 dark:text-gray-100";
-  const navHoverClass  = scrolled || hasDarkHero ? "hover:text-blue-200" : "hover:text-primary-700 dark:hover:text-primary-300";
-  const underlineClass = scrolled || hasDarkHero ? "bg-white" : "bg-primary-700 dark:bg-primary-400";
+  // Navbar text/underline classes — always white on dark pages, dark on light pages
+  const navTextClass   = hasDarkHero ? "text-white" : "text-gray-800 dark:text-gray-100";
+  const navHoverClass  = hasDarkHero ? "hover:text-blue-200" : "hover:text-primary-700 dark:hover:text-primary-300";
+  const underlineClass = hasDarkHero ? "bg-white" : "bg-primary-700 dark:bg-primary-400";
+
+  // Navbar background: always opaque and matched to page theme
+  const navBg = hasDarkHero
+    ? `bg-primary-900/90 backdrop-blur-md ${scrolled ? "shadow-lg border-b border-primary-700/40" : "border-b border-white/10"}`
+    : `bg-white/97 backdrop-blur-md border-b border-gray-200/80 ${scrolled ? "shadow-md" : "shadow-sm"}`;
 
   return (
     <motion.header
@@ -170,9 +176,7 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-primary-800/95 backdrop-blur-md shadow-lg border-b border-primary-700/50" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">

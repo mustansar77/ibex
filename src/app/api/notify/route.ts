@@ -1,13 +1,27 @@
 import { NextResponse } from "next/server";
 
+/**
+ * Telegram Bot notification for new applications.
+ *
+ * Setup (free, takes 2 minutes):
+ * 1. Open Telegram and message @BotFather
+ * 2. Send /newbot and follow prompts → you get a BOT_TOKEN
+ * 3. Start a chat with your new bot (send /start)
+ * 4. Visit: https://api.telegram.org/bot<BOT_TOKEN>/getUpdates
+ *    and copy the "id" value from "chat" → that is your CHAT_ID
+ * 5. Add to .env.local:
+ *    TELEGRAM_BOT_TOKEN=123456:ABCdef...
+ *    TELEGRAM_CHAT_ID=987654321
+ */
+
 export async function POST(req: Request) {
   try {
     const { name, phone, program } = await req.json();
 
-    const apiKey     = process.env.CALLMEBOT_API_KEY;
-    const adminPhone = process.env.ADMIN_WHATSAPP_PHONE || "923115170829";
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const chatId   = process.env.TELEGRAM_CHAT_ID;
 
-    if (!apiKey) {
+    if (!botToken || !chatId) {
       // Not configured — silently skip, don't break the form
       return NextResponse.json({ skipped: true });
     }
@@ -23,16 +37,30 @@ export async function POST(req: Request) {
       `📚 Program: ${programLabel}`,
       "",
       "Login to admin panel to review:",
-      "http://your-domain.com/admin/applications",
+      `${process.env.NEXT_PUBLIC_SITE_URL || "https://ibex-dusky.vercel.app"}/admin/applications`,
     ].join("\n");
 
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${adminPhone}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-    await fetch(url, { method: "GET" });
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: "Markdown",
+      }),
+    });
 
-    return NextResponse.json({ sent: true });
-  } catch {
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("[notify] Telegram error:", err);
+    }
+
+    return NextResponse.json({ sent: res.ok });
+  } catch (e) {
     // Never let notification failure break the submission
+    console.error("[notify] Unexpected error:", e);
     return NextResponse.json({ error: "notification failed" }, { status: 200 });
   }
 }

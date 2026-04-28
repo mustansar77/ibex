@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ interface Ann { id: string; title: string; content: string; type: string; is_act
 const types = ["announcement","update","alert"];
 const inputClass = "w-full px-3 py-2.5 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-primary-500";
 const empty = { title: "", content: "", type: "announcement", is_active: true, published_at: new Date().toISOString().split("T")[0] };
-const typeBadge: Record<string, string> = { announcement: "bg-blue-900/40 text-blue-400", update: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400", alert: "bg-red-900/40 text-red-400" };
+const typeBadge: Record<string, string> = { announcement: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400", update: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400", alert: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400" };
 
 async function dbCall(body: object) {
   const res = await fetch("/api/admin/db", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
@@ -78,7 +78,7 @@ export default function AnnouncementsAdmin() {
 
       <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden">
         {loading ? (
-          <div className="py-16 text-center text-gray-400 dark:text-gray-500">Loading…</div>
+          <div className="py-16 text-center text-gray-400 dark:text-gray-500">Loading�</div>
         ) : anns.length === 0 ? (
           <div className="py-16 text-center text-gray-400 dark:text-gray-500">No announcements yet.</div>
         ) : (
@@ -103,7 +103,7 @@ export default function AnnouncementsAdmin() {
                   <td className="px-4 py-3.5">
                     <div className="flex gap-2">
                       <button onClick={() => openEdit(a)} className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                      <button onClick={() => setDeleteId(a.id)} className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => setDeleteId(a.id)} className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-950/40 dark:hover:bg-red-900/60 dark:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
                   </td>
                 </motion.tr>
@@ -133,12 +133,12 @@ export default function AnnouncementsAdmin() {
               </div>
               <label className="flex items-center gap-3 cursor-pointer">
                 <input type="checkbox" checked={form.is_active} onChange={(e) => setForm((p) => ({ ...p, is_active: e.target.checked }))} className="accent-primary-700 w-4 h-4" />
-                <span className="text-sm text-gray-300 font-medium">Active (visible on website)</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">Active (visible on website)</span>
               </label>
             </div>
             <div className="flex gap-3 mt-5">
               <button onClick={() => setShowForm(false)} className="flex-1 py-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-sm">Cancel</button>
-              <button onClick={save} disabled={saving} className="flex-1 py-2.5 rounded-xl bg-primary-700 hover:bg-primary-600 text-white font-bold text-sm disabled:opacity-60">{saving ? "Saving…" : "Save"}</button>
+              <button onClick={save} disabled={saving} className="flex-1 py-2.5 rounded-xl bg-primary-700 hover:bg-primary-600 text-white font-bold text-sm disabled:opacity-60">{saving ? "Saving�" : "Save"}</button>
             </div>
           </motion.div>
         </div>

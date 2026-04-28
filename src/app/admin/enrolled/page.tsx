@@ -73,21 +73,21 @@ export default function EnrolledPage() {
                   <motion.tr key={s.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }} className="hover:bg-gray-50 dark:hover:bg-gray-800/30">
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-green-700/30 text-green-400 flex items-center justify-center font-black text-sm">{s.name.charAt(0)}</div>
+                        <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 dark:bg-green-700/30 dark:text-green-400 flex items-center justify-center font-black text-sm">{s.name.charAt(0)}</div>
                         <div>
                           <div className="text-sm font-semibold text-gray-900 dark:text-white">{s.name}</div>
                           <div className="text-xs text-gray-500">{s.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300 capitalize">{s.program.replace("-", " ")}</td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300">{s.batch_preference || "—"}</td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300">{s.phone}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300 capitalize">{s.program.replace("-", " ")}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300">{s.batch_preference || "—"}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300">{s.phone}</td>
                     <td className="px-4 py-3.5 text-sm text-gray-400">{new Date(s.created_at).toLocaleDateString()}</td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center gap-2">
                         <button onClick={() => setSelected(s)} className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="View"><Eye className="w-3.5 h-3.5" /></button>
-                        <button onClick={() => setConfirmDelete(s.id)} className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-400 transition-colors" title="Delete"><Trash2 className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => setConfirmDelete(s.id)} className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-950/40 dark:hover:bg-red-900/60 dark:text-red-400 transition-colors" title="Delete"><Trash2 className="w-3.5 h-3.5" /></button>
                       </div>
                     </td>
                   </motion.tr>

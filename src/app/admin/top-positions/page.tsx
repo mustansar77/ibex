@@ -104,14 +104,14 @@ export default function TopPositionsAdmin() {
                         <span className="text-sm font-semibold text-gray-900 dark:text-white">{p.name}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-3.5 text-sm font-bold text-primary-400">{p.marks_obtained}/{p.total_marks}</td>
-                    <td className="px-4 py-3.5 text-sm text-gray-300">{p.board}</td>
+                    <td className="px-4 py-3.5 text-sm font-bold text-primary-700 dark:text-primary-400">{p.marks_obtained}/{p.total_marks}</td>
+                    <td className="px-4 py-3.5 text-sm text-gray-600 dark:text-gray-300">{p.board}</td>
                     <td className="px-4 py-3.5"><span className="px-2 py-0.5 rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-400 text-xs font-bold">{p.test_type}</span></td>
                     <td className="px-4 py-3.5 text-sm text-gray-400">{p.year}</td>
                     <td className="px-4 py-3.5">
                       <div className="flex gap-2">
                         <button onClick={() => openEdit(p)} className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
-                        <button onClick={() => setDeleteId(p.id)} className="p-2 rounded-lg bg-red-950/40 hover:bg-red-900/60 text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
+                        <button onClick={() => setDeleteId(p.id)} className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-950/40 dark:hover:bg-red-900/60 dark:text-red-400 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
                       </div>
                     </td>
                   </motion.tr>
