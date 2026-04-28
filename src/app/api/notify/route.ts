@@ -1,27 +1,28 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 /**
- * Telegram Bot notification for new applications.
+ * Gmail email notification for new applications.
  *
- * Setup (free, takes 2 minutes):
- * 1. Open Telegram and message @BotFather
- * 2. Send /newbot and follow prompts → you get a BOT_TOKEN
- * 3. Start a chat with your new bot (send /start)
- * 4. Visit: https://api.telegram.org/bot<BOT_TOKEN>/getUpdates
- *    and copy the "id" value from "chat" → that is your CHAT_ID
- * 5. Add to .env.local:
- *    TELEGRAM_BOT_TOKEN=123456:ABCdef...
- *    TELEGRAM_CHAT_ID=987654321
+ * Setup (free, takes 3 minutes):
+ * 1. Go to your Google Account → Security → 2-Step Verification (enable if off)
+ * 2. Then go to: https://myaccount.google.com/apppasswords
+ * 3. Select "Mail" and your device → Generate → copy the 16-char password
+ * 4. Add to Vercel environment variables:
+ *    GMAIL_USER     = your Gmail address (e.g. ibexinstitute@gmail.com)
+ *    GMAIL_APP_PASSWORD = the 16-char app password (no spaces)
+ *    ADMIN_NOTIFY_EMAIL = email that receives the alerts (can be same as GMAIL_USER)
  */
 
 export async function POST(req: Request) {
   try {
     const { name, phone, program } = await req.json();
 
-    const botToken = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId   = process.env.TELEGRAM_CHAT_ID;
+    const gmailUser     = process.env.GMAIL_USER;
+    const gmailPass     = process.env.GMAIL_APP_PASSWORD;
+    const notifyEmail   = process.env.ADMIN_NOTIFY_EMAIL || gmailUser;
 
-    if (!botToken || !chatId) {
+    if (!gmailUser || !gmailPass) {
       // Not configured — silently skip, don't break the form
       return NextResponse.json({ skipped: true });
     }
@@ -29,38 +30,44 @@ export async function POST(req: Request) {
     const programLabel =
       program === "entry-test" ? "Entry Test Preparation" : "Evening Coaching";
 
-    const message = [
-      "🎓 *New Application — IBEX Institute*",
-      "",
-      `👤 Name: ${name}`,
-      `📞 Phone: ${phone}`,
-      `📚 Program: ${programLabel}`,
-      "",
-      "Login to admin panel to review:",
-      `${process.env.NEXT_PUBLIC_SITE_URL || "https://ibex-dusky.vercel.app"}/admin/applications`,
-    ].join("\n");
-
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: "Markdown",
-      }),
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: { user: gmailUser, pass: gmailPass },
     });
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("[notify] Telegram error:", err);
-    }
+    await transporter.sendMail({
+      from: `"IBEX Institute" <${gmailUser}>`,
+      to: notifyEmail,
+      subject: `📋 New Application — ${name} (${programLabel})`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;background:#f8fafc;padding:24px;border-radius:12px;">
+          <div style="background:#1e3a5f;border-radius:8px;padding:20px 24px;margin-bottom:20px;">
+            <h2 style="color:#fff;margin:0;font-size:20px;">🎓 New Application Received</h2>
+            <p style="color:#93c5fd;margin:4px 0 0;font-size:13px;">IBEX Institute Bahawalpur</p>
+          </div>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:10px 0;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:13px;width:40%;">Student Name</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#1e293b;">${name}</td></tr>
+            <tr><td style="padding:10px 0;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:13px;">Phone</td>
+                <td style="padding:10px 0;border-bottom:1px solid #e2e8f0;font-weight:bold;color:#1e293b;">${phone}</td></tr>
+            <tr><td style="padding:10px 0;color:#64748b;font-size:13px;">Program</td>
+                <td style="padding:10px 0;font-weight:bold;color:#1e3a5f;">${programLabel}</td></tr>
+          </table>
+          <div style="margin-top:20px;text-align:center;">
+            <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://ibex-dusky.vercel.app"}/admin/applications"
+               style="display:inline-block;background:#1e3a5f;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:14px;">
+              Review Application →
+            </a>
+          </div>
+          <p style="color:#94a3b8;font-size:11px;text-align:center;margin-top:16px;">IBEX Institute Admin Panel</p>
+        </div>
+      `,
+    });
 
-    return NextResponse.json({ sent: res.ok });
+    return NextResponse.json({ sent: true });
   } catch (e) {
     // Never let notification failure break the submission
-    console.error("[notify] Unexpected error:", e);
+    console.error("[notify] Email error:", e);
     return NextResponse.json({ error: "notification failed" }, { status: 200 });
   }
 }

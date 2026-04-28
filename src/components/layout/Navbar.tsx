@@ -158,7 +158,8 @@ export default function Navbar() {
     pathname.startsWith("/programs") ||
     pathname.startsWith("/whats-new") ||
     pathname.startsWith("/top-position") ||
-    pathname.startsWith("/news");
+    pathname.startsWith("/news") ||
+    pathname.startsWith("/apply");
 
   // Navbar text/underline classes — always white on dark pages, dark on light pages
   const navTextClass   = hasDarkHero ? "text-white" : "text-gray-800 dark:text-gray-100";
