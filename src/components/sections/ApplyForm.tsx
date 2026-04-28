@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -83,8 +83,8 @@ export default function ApplyForm({ program, programTitle, programIcon, programC
     return (
       <div className="min-h-screen bg-white dark:bg-dark-bg pt-20 flex items-center justify-center px-4">
         <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="max-w-md w-full text-center">
-          <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="w-10 h-10 text-green-500" />
+          <div className="w-20 h-20 rounded-full bg-blue-100 dark:bg-primary-900/30 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-10 h-10 text-primary-600 dark:text-primary-400" />
           </div>
           <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-3">Application Submitted!</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-2">Thank you, <strong>{form.name}</strong>. Your application for <strong>{programTitle}</strong> has been received.</p>
@@ -239,7 +239,7 @@ export default function ApplyForm({ program, programTitle, programIcon, programC
               </button>
             ) : (
               <button onClick={handleSubmit} disabled={loading}
-                className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-sm transition-all disabled:opacity-60">
+                className="flex items-center gap-2 px-8 py-2.5 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold text-sm transition-all disabled:opacity-60">
                 <Send className="w-4 h-4" />
                 {loading ? "Submitting…" : "Submit Application"}
               </button>

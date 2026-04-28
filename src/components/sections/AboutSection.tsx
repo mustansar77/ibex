@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { CheckCircle2, MapPin, BookOpen } from "lucide-react";
@@ -64,7 +64,7 @@ export default function AboutSection() {
               transition={{ delay: 0.5 }}
               className="absolute -top-6 -left-6 bg-white dark:bg-dark-bg rounded-2xl shadow-xl p-4 border border-gray-100 dark:border-dark-border"
             >
-              <div className="text-3xl font-black text-amber-500">5000+</div>
+              <div className="text-3xl font-black text-primary-500">5000+</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">Alumni Strong</div>
             </motion.div>
           </motion.div>
@@ -99,7 +99,7 @@ export default function AboutSection() {
             <ul className="space-y-3 mb-8">
               {highlights.map((h) => (
                 <li key={h} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />
                   <span className="text-sm text-gray-700 dark:text-gray-300">{h}</span>
                 </li>
               ))}

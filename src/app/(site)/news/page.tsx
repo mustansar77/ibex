@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -8,10 +8,10 @@ import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 interface NewsItem { id: string; title: string; content: string; category: string; is_published: boolean; published_at: string; }
 
 const categoryColors: Record<string, string> = {
-  Results:     "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  Results:     "bg-blue-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400",
   Admissions:  "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  Scholarship: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
-  Achievement: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+  Scholarship: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-primary-400",
+  Achievement: "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-primary-400",
   Events:      "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400",
   Facility:    "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400",
   General:     "bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400",

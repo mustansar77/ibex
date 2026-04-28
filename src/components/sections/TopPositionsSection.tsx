@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -42,9 +42,9 @@ const gradients = [
 ];
 
 const rankBadge: Record<number, string> = {
-  1: "bg-amber-400 text-white",
+  1: "bg-primary-400 text-white",
   2: "bg-gray-300 text-gray-800",
-  3: "bg-amber-700 text-white",
+  3: "bg-primary-800 text-white",
 };
 
 export default function TopPositionsSection() {
@@ -79,7 +79,7 @@ export default function TopPositionsSection() {
           className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-semibold mb-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-600/10 dark:bg-primary-600/20 text-primary-600 dark:text-primary-400 text-sm font-semibold mb-3">
               <Trophy className="w-4 h-4" />
               Our Top Achievers
             </div>

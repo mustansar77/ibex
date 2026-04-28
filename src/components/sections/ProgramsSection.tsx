@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -20,8 +20,8 @@ interface ProgramItem {
 }
 
 const SLUG_THEME: Record<string, { gradient: string; icon: React.ElementType; badge: string; badgeBg: string; accentColor: string }> = {
-  "entry-test":       { gradient: "from-primary-700 to-primary-900", icon: FlaskConical, badge: "Most Popular",   badgeBg: "bg-amber-500",  accentColor: "text-amber-400" },
-  "evening-coaching": { gradient: "from-purple-700 to-purple-900",   icon: Moon,         badge: "Flexible Timing", badgeBg: "bg-purple-500", accentColor: "text-purple-300" },
+  "entry-test":       { gradient: "from-primary-700 to-primary-900", icon: FlaskConical, badge: "Most Popular",   badgeBg: "bg-primary-600",  accentColor: "text-primary-400" },
+  "evening-coaching": { gradient: "from-primary-700 to-primary-900",   icon: Moon,         badge: "Flexible Timing", badgeBg: "bg-primary-600", accentColor: "text-blue-200" },
 };
 const DEFAULT_THEME = { gradient: "from-gray-700 to-gray-900", icon: BookOpen, badge: "Program", badgeBg: "bg-gray-500", accentColor: "text-gray-300" };
 
@@ -99,7 +99,7 @@ export default function ProgramsSection() {
                 >
                   {program.slug === "entry-test" && (
                     <div className="absolute -top-3 left-6 z-10">
-                      <span className="px-4 py-1 rounded-full bg-amber-500 text-white text-xs font-bold shadow-lg">
+                      <span className="px-4 py-1 rounded-full bg-primary-600 text-white text-xs font-bold shadow-lg">
                         ⭐ Most Popular
                       </span>
                     </div>
@@ -147,7 +147,7 @@ export default function ProgramsSection() {
                       <ul className="space-y-3 flex-1">
                         {(program.features || []).map((feature) => (
                           <li key={feature} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />
                             <span className="text-sm text-gray-700 dark:text-gray-300">{feature}</span>
                           </li>
                         ))}

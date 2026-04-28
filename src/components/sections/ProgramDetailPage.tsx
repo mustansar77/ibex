@@ -18,8 +18,8 @@ export interface SupabaseProgram {
 }
 
 const THEMES: Record<string, { gradient: string; icon: string; accent: string; badgeBg: string; badge: string }> = {
-  "entry-test":       { gradient: "from-primary-900 to-primary-700", icon: "🔬", accent: "text-blue-200",   badgeBg: "bg-amber-500",  badge: "Most Popular" },
-  "evening-coaching": { gradient: "from-purple-900 to-purple-700",   icon: "🌙", accent: "text-purple-200", badgeBg: "bg-purple-500", badge: "Flexible Timing" },
+  "entry-test":       { gradient: "from-primary-800 to-primary-950", icon: "🔬", accent: "text-blue-200",  badgeBg: "bg-primary-500", badge: "Most Popular" },
+  "evening-coaching": { gradient: "from-primary-700 to-primary-950", icon: "🌙", accent: "text-blue-100",  badgeBg: "bg-primary-600", badge: "Flexible Timing" },
 };
 const DEFAULT_THEME = { gradient: "from-primary-800 to-primary-950", icon: "📚", accent: "text-blue-200", badgeBg: "bg-primary-700", badge: "Program" };
 
@@ -87,7 +87,7 @@ export default function ProgramDetailPage({ program }: { program: SupabaseProgra
                   <div className="grid sm:grid-cols-2 gap-3">
                     {program.features.map((f) => (
                       <div key={f} className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-dark-border">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />
                         <span className="text-sm text-gray-700 dark:text-gray-300">{f}</span>
                       </div>
                     ))}

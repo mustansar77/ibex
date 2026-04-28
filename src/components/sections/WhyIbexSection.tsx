@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import {
@@ -28,8 +28,8 @@ const features = [
     description:
       "Every lesson is structured around exam patterns and scoring strategies to maximize your performance on test day.",
     color: "from-amber-500 to-amber-700",
-    light: "bg-amber-50 dark:bg-amber-950/40",
-    iconColor: "text-amber-600 dark:text-amber-400",
+    light: "bg-primary-50 dark:bg-primary-950/40",
+    iconColor: "text-primary-600 dark:text-primary-400",
   },
   {
     icon: BarChart3,
@@ -37,8 +37,8 @@ const features = [
     description:
       "Regular assessments and detailed performance reports help you track progress and identify areas for improvement.",
     color: "from-green-500 to-green-700",
-    light: "bg-green-50 dark:bg-green-950/40",
-    iconColor: "text-green-600 dark:text-green-400",
+    light: "bg-blue-50 dark:bg-primary-950/40",
+    iconColor: "text-primary-600 dark:text-primary-400",
   },
   {
     icon: MessageCircle,
@@ -46,8 +46,8 @@ const features = [
     description:
       "Students receive individual attention and one-on-one mentoring to address their unique academic challenges.",
     color: "from-purple-500 to-purple-700",
-    light: "bg-purple-50 dark:bg-purple-950/40",
-    iconColor: "text-purple-600 dark:text-purple-400",
+    light: "bg-primary-50 dark:bg-primary-950/40",
+    iconColor: "text-primary-600 dark:text-primary-400",
   },
   {
     icon: Shield,

@@ -20,9 +20,9 @@ export interface SupabaseSession {
 
 // Slug → visual theme mapping; new slugs fall back to default
 const THEMES: Record<string, { gradient: string; accent: string; icon: string; badge: string; badgeBg: string }> = {
-  "t-session-scholarship": { gradient: "from-amber-700 to-amber-950", accent: "text-amber-200",  icon: "🏆", badge: "Scholarship Program", badgeBg: "bg-amber-500" },
-  "pre-9th":               { gradient: "from-green-800 to-green-950",  accent: "text-green-300",  icon: "📚", badge: "Summer Program",      badgeBg: "bg-green-500" },
-  "r-session":             { gradient: "from-blue-800 to-blue-950",    accent: "text-blue-200",   icon: "🎓", badge: "Year-Round Program",  badgeBg: "bg-blue-600" },
+  "t-session-scholarship": { gradient: "from-primary-600 to-primary-950", accent: "text-blue-100",  icon: "🏆", badge: "Scholarship Program", badgeBg: "bg-primary-500" },
+  "pre-9th":               { gradient: "from-primary-700 to-primary-950", accent: "text-blue-200",  icon: "📚", badge: "Summer Program",      badgeBg: "bg-primary-600" },
+  "r-session":             { gradient: "from-primary-800 to-primary-950", accent: "text-blue-200",  icon: "🎓", badge: "Year-Round Program",  badgeBg: "bg-primary-700" },
 };
 const DEFAULT_THEME = { gradient: "from-primary-800 to-primary-950", accent: "text-blue-200", icon: "📖", badge: "Academic Session", badgeBg: "bg-primary-700" };
 
@@ -94,7 +94,7 @@ export default function SessionDetailPage({ session }: { session: SupabaseSessio
                   <div className="grid sm:grid-cols-2 gap-3">
                     {session.features.map((f) => (
                       <div key={f} className="flex items-start gap-3 p-4 rounded-xl bg-gray-50 dark:bg-dark-card border border-gray-100 dark:border-dark-border">
-                        <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />
                         <span className="text-sm text-gray-700 dark:text-gray-300">{f}</span>
                       </div>
                     ))}
@@ -133,12 +133,12 @@ export default function SessionDetailPage({ session }: { session: SupabaseSessio
               {/* Scholarship note */}
               {session.scholarship_info && (
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                  className="p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
+                  className="p-5 rounded-2xl bg-primary-50 dark:bg-primary-950/30 border border-primary-100 dark:border-primary-900/50">
                   <div className="flex items-start gap-3">
-                    <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                    <Info className="w-5 h-5 text-primary-600 dark:text-primary-400 shrink-0 mt-0.5" />
                     <div>
-                      <div className="font-bold text-amber-800 dark:text-amber-300 mb-1">Scholarship Info</div>
-                      <p className="text-sm text-amber-700 dark:text-amber-400">{session.scholarship_info}</p>
+                      <div className="font-bold text-primary-800 dark:text-primary-300 mb-1">Scholarship Info</div>
+                      <p className="text-sm text-primary-700 dark:text-primary-400">{session.scholarship_info}</p>
                     </div>
                   </div>
                 </motion.div>

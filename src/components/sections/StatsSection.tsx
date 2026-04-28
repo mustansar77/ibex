@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
@@ -20,8 +20,8 @@ const stats = [
     suffix: "%",
     label: "Success Rate",
     description: "Our students consistently achieve top results",
-    color: "text-amber-600 dark:text-amber-400",
-    bg: "bg-amber-50 dark:bg-amber-950/40",
+    color: "text-primary-600 dark:text-primary-400",
+    bg: "bg-primary-50 dark:bg-primary-950/40",
   },
   {
     icon: Clock,
@@ -29,8 +29,8 @@ const stats = [
     suffix: "+",
     label: "Years of Excellence",
     description: "Decade of quality education and mentorship",
-    color: "text-green-600 dark:text-green-400",
-    bg: "bg-green-50 dark:bg-green-950/40",
+    color: "text-primary-600 dark:text-primary-400",
+    bg: "bg-blue-50 dark:bg-primary-950/40",
   },
   {
     icon: GraduationCap,
@@ -38,8 +38,8 @@ const stats = [
     suffix: "+",
     label: "Expert Faculty",
     description: "Highly qualified and experienced educators",
-    color: "text-purple-600 dark:text-purple-400",
-    bg: "bg-purple-50 dark:bg-purple-950/40",
+    color: "text-primary-600 dark:text-primary-400",
+    bg: "bg-primary-50 dark:bg-primary-950/40",
   },
 ];
 

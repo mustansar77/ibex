@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -112,8 +112,8 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-black text-white">Dashboard</h1>
-          <p className="text-gray-400 text-sm mt-1">
+          <h1 className="text-2xl font-black text-gray-900 dark:text-white">Dashboard</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
             Welcome back, Admin.
             <span className="ml-2 text-xs text-gray-600">
               Last updated: {lastRefreshed.toLocaleTimeString()}
@@ -121,7 +121,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <button onClick={fetchData} disabled={loading}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800 text-gray-300 hover:text-white text-sm font-medium transition-colors disabled:opacity-50">
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors disabled:opacity-50">
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} /> Refresh
         </button>
       </div>
@@ -145,14 +145,14 @@ export default function DashboardPage() {
         {statCards.map((s, i) => (
           <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}>
             <Link href={s.href} className="block group">
-              <div className="bg-gray-900 rounded-2xl p-4 border border-gray-800 hover:border-gray-600 transition-all h-full">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 hover:border-primary-300 dark:hover:border-gray-600 transition-all h-full">
                 <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center mb-3`}>
                   <s.icon className={`w-4 h-4 ${s.color}`} />
                 </div>
                 <div className={`text-2xl font-black ${s.color} mb-1`}>
-                  {loading ? <span className="inline-block w-8 h-6 bg-gray-800 rounded animate-pulse" /> : s.value}
+                  {loading ? <span className="inline-block w-8 h-6 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" /> : s.value}
                 </div>
-                <div className="text-xs text-gray-400 leading-tight">{s.label}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 leading-tight">{s.label}</div>
               </div>
             </Link>
           </motion.div>
@@ -164,8 +164,8 @@ export default function DashboardPage() {
 
         {/* Funnel */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-          className="bg-gray-900 rounded-2xl border border-gray-800 p-5">
-          <h2 className="font-black text-white text-sm mb-4 flex items-center gap-2">
+          className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-5">
+          <h2 className="font-black text-gray-900 dark:text-white text-sm mb-4 flex items-center gap-2">
             <TrendingUp className="w-4 h-4 text-primary-400" /> Application Funnel
           </h2>
           <div className="space-y-3">
@@ -212,7 +212,7 @@ export default function DashboardPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
           className="lg:col-span-2 bg-gray-900 rounded-2xl border border-gray-800 p-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-black text-white text-sm flex items-center gap-2">
+            <h2 className="font-black text-gray-900 dark:text-white text-sm flex items-center gap-2">
               <Users className="w-4 h-4 text-primary-400" /> Recent Applications
             </h2>
             <Link href="/admin/applications" className="text-xs text-primary-400 hover:text-primary-300 transition-colors font-medium">
@@ -277,7 +277,7 @@ export default function DashboardPage() {
           ].map((q, i) => (
             <motion.div key={q.href} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 + i * 0.05 }}>
               <Link href={q.href} className="block group">
-                <div className="relative bg-gray-900 rounded-2xl p-4 border border-gray-800 hover:border-primary-700/60 transition-all group-hover:bg-gray-800/60">
+                <div className="relative bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-200 dark:border-gray-800 hover:border-primary-600/60 dark:hover:border-primary-700/60 transition-all group-hover:bg-gray-50 dark:group-hover:bg-gray-800/60">
                   {q.badge > 0 && (
                     <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-amber-500 text-white text-xs font-black flex items-center justify-center">
                       {q.badge}

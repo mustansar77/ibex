@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, ArrowRight, MessageCircle } from "lucide-react";
@@ -76,8 +76,8 @@ export default function CTASection() {
               icon: Mail,
               title: "Email Us",
               lines: ["ibexcampus@gmail.com", ],
-              color: "text-amber-600 dark:text-amber-400",
-              bg: "bg-amber-50 dark:bg-amber-950/40",
+              color: "text-primary-600 dark:text-primary-400",
+              bg: "bg-primary-50 dark:bg-primary-950/40",
               action: "mailto:info@ibexinstitute.com",
               actionLabel: "Send Email →",
             },
@@ -85,8 +85,8 @@ export default function CTASection() {
               icon: MapPin,
               title: "Visit Us",
               lines: ["IBEX Institute", "Bahawalpur, Punjab, Pakistan"],
-              color: "text-green-600 dark:text-green-400",
-              bg: "bg-green-50 dark:bg-green-950/40",
+              color: "text-primary-600 dark:text-primary-400",
+              bg: "bg-blue-50 dark:bg-primary-950/40",
               action: "https://maps.google.com/?q=Bahawalpur+Punjab+Pakistan",
               actionLabel: "Get Directions →",
             },

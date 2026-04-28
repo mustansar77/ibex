@@ -19,29 +19,29 @@ const TYPE_CONFIG: Record<string, {
   alert: {
     label: "Alert",
     icon: AlertCircle,
-    cardBg: "bg-red-50 dark:bg-red-950/20 border-red-100 dark:border-red-900/40",
-    iconBg: "bg-red-100 dark:bg-red-900/40",
-    iconColor: "text-red-600 dark:text-red-400",
-    badge: "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-400",
-    dot: "bg-red-500",
+    cardBg: "bg-primary-50 dark:bg-primary-950/25 border-primary-200 dark:border-primary-900/50",
+    iconBg: "bg-primary-100 dark:bg-primary-900/40",
+    iconColor: "text-primary-700 dark:text-primary-400",
+    badge: "bg-primary-100 text-primary-800 dark:bg-primary-900/50 dark:text-primary-300",
+    dot: "bg-primary-600",
   },
   update: {
     label: "Update",
     icon: RefreshCw,
-    cardBg: "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-100 dark:border-emerald-900/40",
-    iconBg: "bg-emerald-100 dark:bg-emerald-900/40",
-    iconColor: "text-emerald-600 dark:text-emerald-400",
-    badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400",
-    dot: "bg-emerald-500",
+    cardBg: "bg-blue-50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900/40",
+    iconBg: "bg-blue-100 dark:bg-blue-900/40",
+    iconColor: "text-blue-600 dark:text-blue-400",
+    badge: "bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300",
+    dot: "bg-blue-500",
   },
   announcement: {
     label: "Announcement",
     icon: Megaphone,
-    cardBg: "bg-blue-50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900/40",
-    iconBg: "bg-blue-100 dark:bg-blue-900/40",
-    iconColor: "text-blue-600 dark:text-blue-400",
-    badge: "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-400",
-    dot: "bg-blue-500",
+    cardBg: "bg-gray-50 dark:bg-gray-900/40 border-gray-100 dark:border-gray-800",
+    iconBg: "bg-primary-700/10 dark:bg-primary-900/40",
+    iconColor: "text-primary-700 dark:text-primary-400",
+    badge: "bg-primary-50 text-primary-800 dark:bg-primary-900/40 dark:text-primary-300",
+    dot: "bg-primary-700",
   },
 };
 const DEFAULT_CFG = TYPE_CONFIG.announcement;
@@ -77,12 +77,12 @@ function AnnouncementCard({ item, index }: { item: Announcement; index: number }
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.07 }}
     >
-      <div className={`group relative rounded-2xl border p-5 sm:p-6 transition-all hover:shadow-md ${cfg.cardBg} ${isAlert ? "ring-1 ring-red-200 dark:ring-red-800/50" : ""}`}>
+      <div className={`group relative rounded-2xl border p-5 sm:p-6 transition-all hover:shadow-md ${cfg.cardBg} ${isAlert ? "ring-1 ring-primary-300 dark:ring-primary-800/50" : ""}`}>
         {/* Alert pulse indicator */}
         {isAlert && (
           <span className="absolute top-5 right-5 flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-60" />
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-primary-600" />
           </span>
         )}
 
@@ -152,7 +152,7 @@ export default function WhatsNewPage() {
   return (
     <div className="bg-white dark:bg-dark-bg pt-20">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-indigo-700 to-indigo-950 py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-primary-800 to-primary-950 py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, white 1px, transparent 0)", backgroundSize: "30px 30px" }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-white/5 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] rounded-full border border-white/5 pointer-events-none" />
@@ -163,7 +163,7 @@ export default function WhatsNewPage() {
               <Bell className="w-4 h-4 animate-pulse" /> What&apos;s New
             </div>
             <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">Announcements</h1>
-            <p className="text-indigo-200 text-lg max-w-xl mx-auto">
+            <p className="text-blue-200 text-lg max-w-xl mx-auto">
               Latest updates, alerts, and announcements from IBEX Institute Bahawalpur.
             </p>
 
@@ -173,8 +173,8 @@ export default function WhatsNewPage() {
                   {items.length} active notice{items.length !== 1 ? "s" : ""}
                 </div>
                 {pinned.length > 0 && (
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/20 border border-red-400/30 text-red-200 text-sm font-medium">
-                    <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse inline-block" />
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-blue-100 text-sm font-medium">
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse inline-block" />
                     {pinned.length} urgent alert{pinned.length !== 1 ? "s" : ""}
                   </div>
                 )}
@@ -203,8 +203,8 @@ export default function WhatsNewPage() {
                   <button key={t} onClick={() => setFilter(t)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all border ${
                       filter === t
-                        ? "bg-indigo-700 text-white border-indigo-700 shadow-md"
-                        : "bg-white dark:bg-dark-card text-gray-600 dark:text-gray-400 border-gray-200 dark:border-dark-border hover:border-indigo-300"
+                        ? "bg-primary-700 text-white border-primary-700 shadow-md"
+                        : "bg-white dark:bg-dark-card text-gray-600 dark:text-gray-400 border-gray-200 dark:border-dark-border hover:border-primary-300 dark:hover:border-primary-700"
                     }`}>
                     {cfg && <span className={`w-2 h-2 rounded-full ${cfg.dot}`} />}
                     {t === "all" ? "All Notices" : cfg?.label ?? t}
@@ -222,8 +222,8 @@ export default function WhatsNewPage() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
-              <div className="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-dark-card flex items-center justify-center mx-auto mb-4">
-                <Bell className="w-8 h-8 text-gray-300 dark:text-gray-600" />
+              <div className="w-16 h-16 rounded-2xl bg-primary-50 dark:bg-dark-card flex items-center justify-center mx-auto mb-4">
+                <Bell className="w-8 h-8 text-primary-300 dark:text-primary-700" />
               </div>
               <p className="text-gray-500 font-semibold">No announcements at the moment.</p>
               <p className="text-gray-400 text-sm mt-1">Check back later for updates from IBEX Institute.</p>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,8 +11,7 @@ const testimonials = [
     text: "IBEX Institute transformed my preparation completely. The faculty's dedication and the structured mock test program gave me the confidence to score in the top 5% of MDCAT. I owe my medical career to IBEX!",
     score: "MDCAT 185/200",
     stars: 5,
-    initial: "A",
-    color: "from-blue-500 to-blue-700",
+     
   },
   {
     name: "Fatima Zainab",
@@ -76,7 +75,7 @@ export default function TestimonialsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-semibold mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-600/10 dark:bg-primary-600/20 text-primary-600 dark:text-primary-400 text-sm font-semibold mb-4">
             <Star className="w-4 h-4 fill-current" />
             Student Success Stories
           </div>
@@ -115,7 +114,7 @@ export default function TestimonialsSection() {
                   <Quote className="w-8 h-8 text-primary-700/20 dark:text-primary-400/20 mb-4" />
                   <div className="flex gap-1 mb-3">
                     {Array.from({ length: t.stars }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
+                      <Star key={i} className="w-4 h-4 text-primary-400 fill-current" />
                     ))}
                   </div>
                   <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6 line-clamp-4">
@@ -132,7 +131,7 @@ export default function TestimonialsSection() {
                       <div className="text-xs text-gray-500 dark:text-gray-400">{t.role}</div>
                     </div>
                     <div className="ml-auto">
-                      <span className="px-2.5 py-1 rounded-full bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400 text-xs font-bold border border-green-100 dark:border-green-900">
+                      <span className="px-2.5 py-1 rounded-full bg-blue-50 dark:bg-primary-950/40 text-primary-700 dark:text-primary-400 text-xs font-bold border border-blue-100 dark:border-primary-900">
                         {t.score}
                       </span>
                     </div>
@@ -156,7 +155,7 @@ export default function TestimonialsSection() {
                 <Quote className="w-8 h-8 text-primary-700/20 mb-4" />
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: testimonials[current].stars }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-400 fill-current" />
+                    <Star key={i} className="w-4 h-4 text-primary-400 fill-current" />
                   ))}
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">

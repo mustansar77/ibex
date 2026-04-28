@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,7 +17,7 @@ const slides = [
     secondary: "Learn More",
     secondaryHref: "#about",
     gradient: "from-[#001e3f] via-[#003d7a] to-[#0052a3]",
-    accentColor: "text-amber-400",
+    accentColor: "text-primary-400",
     stat: { val: "98%", label: "Success Rate" },
   },
   {
@@ -45,7 +45,7 @@ const slides = [
     secondary: "View Program",
     secondaryHref: "/programs/evening-coaching",
     gradient: "from-[#12003d] via-[#2d0077] to-[#4a00b4]",
-    accentColor: "text-purple-300",
+    accentColor: "text-blue-200",
     stat: { val: "5000+", label: "Students Coached" },
   },
   {
@@ -59,7 +59,7 @@ const slides = [
     secondary: "Check Eligibility",
     secondaryHref: "/session/t-session-scholarship",
     gradient: "from-[#1a0000] via-[#7a2000] to-[#a33000]",
-    accentColor: "text-amber-400",
+    accentColor: "text-primary-400",
     stat: { val: "100%", label: "Max Scholarship" },
   },
   {
